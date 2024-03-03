@@ -1,1 +1,4 @@
+# Normal things
 .DS_Store
+.env
+*.log
