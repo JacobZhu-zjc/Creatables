@@ -9,20 +9,24 @@
         table {
             border: 1px solid black;
             border-collapse: collapse;
-            margin: 20px auto;
+            margin-top: 20px;
         }
         td {
             border-top: 1px solid black;
             border-bottom: 1px solid black;
             border-collapse: collapse;
         }
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
-<body style="text-align: center">
+<body>
     <h1>CREATABLES</h1>
     <button>LOG IN</button>
     <h3>Recent projects:</h3>
-    <table>
+    <table class="center">
         <tr>
             <td><a href="#">How to grow big beans</a></td>
             <td><br>JSKONS</td>
