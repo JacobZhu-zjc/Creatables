@@ -11,28 +11,22 @@
             border-collapse: collapse;
             margin-top: 20px;
         }
-        
+        button {
+            margin-top: 20px; 
+        }
         .center {
             margin-left: auto;
             margin-right: auto;
         }
-
-        button {
-            margin-top: 20px; 
-        }
     </style>
 </head>
 <body>
-    <h1>CREATE WISHLIST</h1>
-    
-    <h5>Wishlist Title:</h5>
-    <form action="#">
-        <input type="text"><br>
-    </form>
-    
+<h1>CREATE WISHLIST</h1>
 
-
-    <button>Post</button>
-    
+<form action="#">
+    <label for="title">Wishlist Title:</label>
+    <input type="text" id="title"><br>
+    <input type="submit" value="POST">
+</form>
 </body>
 </html>
