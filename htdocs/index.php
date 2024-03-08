@@ -24,7 +24,7 @@
 </head>
 <body>
     <h1>CREATABLES</h1>
-    <button>LOG IN</button>
+    <a href="login.php">LOG IN</a>
     <h3>Recent projects:</h3>
     <table class="center">
         <tr>

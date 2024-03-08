@@ -2,3 +2,8 @@
 .DS_Store
 .env
 *.log
+htdocs/.idea/checkstyle-idea.xml
+htdocs/.idea/htdocs.iml
+htdocs/.idea/misc.xml
+htdocs/.idea/modules.xml
+htdocs/.idea/vcs.xml
