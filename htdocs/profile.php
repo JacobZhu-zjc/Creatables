@@ -13,6 +13,7 @@ $time = date_create("now", new DateTimeZone($prefix.$utc_offset));
         }
         .offsetRight {
             float: right;
+            margin-left: 5px;
         }
         div {
             border: 1px solid black;
@@ -26,7 +27,7 @@ $time = date_create("now", new DateTimeZone($prefix.$utc_offset));
 <body>
 <h1>JSKONS</h1>
 <h2>Jacob Skons</h2>
-<button class="offsetRight">Log out</button>
+<button class="offsetRight">Log out</button><button class="offsetRight">Inbox</button>
 <h3>Vancouver, Canada (Local Time: <?php echo($time->format("h:i")); ?>)</h3>
 <br>
 <h2>Guides</h2><button class="offsetRight">Create New</button>

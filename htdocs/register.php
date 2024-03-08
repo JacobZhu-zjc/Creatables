@@ -6,9 +6,6 @@
         body {
             text-align: center;
         }
-        label {
-            text-align: left;
-        }
         input, select {
             margin-bottom: 10px;
         }
