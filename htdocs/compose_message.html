@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>LOGIN</title>
+    <title>COMPOSE MESSAGE</title>
     <style>
         body {
             text-align: center;
@@ -11,11 +11,17 @@
         }
         input {
             margin-bottom: 10px;
+            min-width: 300px;
+        }
+        textarea {
+            margin-bottom: 10px;
+            min-width: 300px;
+            min-height: 300px;
         }
     </style>
 </head>
 <body>
-<h1>LOGIN</h1>
+<h1>COMPOSE MESSAGE</h1>
 <form action="#">
     <label for="recipient">Recipent:</label>
     <br>
@@ -25,9 +31,9 @@
     <br>
     <input type="text" name="subject" id="subject" placeholder="Pick an interesting title">
     <br>
-    <label for="message">Subject:</label>
+    <label for="message">Message:</label>
     <br>
-    <input type="text" name="message" id="message" placeholder="Say something nice...">
+    <textarea name="message" id="message" placeholder="Say something nice..."></textarea>
     <br>
     <input type="submit" value="SEND">
 </form>
