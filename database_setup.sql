@@ -2,6 +2,19 @@
 -- CREATE DATABASE creatables
 -- USE creatables
 
+-- Drop existing tables
+DROP TABLE IF EXISTS CompletesProject;
+DROP TABLE IF EXISTS Contains;
+DROP TABLE IF EXISTS Equipment_NeedsTools;
+DROP TABLE IF EXISTS PurchaseLink_Name;
+DROP TABLE IF EXISTS Message_Sends;
+DROP TABLE IF EXISTS Feedback_LeavesFeedback;
+DROP TABLE IF EXISTS Images_ContainsImages;
+DROP TABLE IF EXISTS Materials_MadeWith;
+DROP TABLE IF EXISTS Projects_PostsProject;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS City_Timezones;
+
 -- Create tables
 CREATE TABLE City_Timezones (
     City VARCHAR(40) PRIMARY KEY,
@@ -105,3 +118,4 @@ CREATE TABLE CompletesProject (
     FOREIGN KEY (PID) REFERENCES Projects_PostsProject(PID)
         ON DELETE CASCADE
 );
+-- Insert data
