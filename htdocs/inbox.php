@@ -68,7 +68,7 @@
         </tr>
     </table>
 
-    <iframe src="message_viewer.html">
+    <iframe src="message_viewer.php">
     </iframe>
 </form>
 </body>
