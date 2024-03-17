@@ -121,9 +121,15 @@ CREATE TABLE CompletesProject (
 );
 -- Insert data
 INSERT INTO City_Timezones (City, Timezone)
-VALUES ('Vancouver', -8);
+VALUES ('Vancouver', -7);
 INSERT INTO City_Timezones (City, Timezone)
-VALUES ('Seattle', -8);
+VALUES ('Victoria', -7);
+INSERT INTO City_Timezones (City, Timezone)
+VALUES ('Quebec City', -4);
+INSERT INTO City_Timezones (City, Timezone)
+VALUES ('Toronto', -4);
+INSERT INTO City_Timezones (City, Timezone)
+VALUES ('Seattle', -7);
 INSERT INTO City_Timezones (City, Timezone)
 VALUES ('Geneva', 1);
 INSERT INTO City_Timezones (City, Timezone)

@@ -19,15 +19,14 @@
 <em id="error">
     <strong>
     <?php
-    if (isset($_GET["err"]) && strlen($_GET["err"])) {
-        echo("Error: ");
+    if (isset($_GET["err"]) && $_GET["err"]) {
         echo(htmlentities($_GET["err"]));
         echo("<br><br>");
     }
     ?>
     </strong>
 </em>
-<form action="api/validate_login.php">
+<form action="api/validate_login.php" method="post">
     <label for="username">Username:</label>
     <input type="text" name="username" id="username">
     <br>

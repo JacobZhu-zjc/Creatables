@@ -20,14 +20,13 @@
     <strong>
         <?php
         if (isset($_GET["err"]) && strlen($_GET["err"])) {
-            echo("Error: ");
             echo(htmlentities($_GET["err"]));
             echo("<br><br>");
         }
         ?>
     </strong>
 </em>
-<form action="api/register_user.php">
+<form action="api/register_user.php" method="post">
     <label for="username">Username:</label>
     <input type="text" name="username" id="username">
     <br>
