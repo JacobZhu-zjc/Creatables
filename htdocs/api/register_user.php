@@ -48,6 +48,9 @@ switch ($city) {
 if (strlen($username) < $min_username_length) {
     redirect_with_error("Username must be at least ".$min_username_length." characters long.");
 }
+if (strlen($username) > 40) {
+    redirect_with_error("Username must not be longer than 40 characters long.");
+}
 if (strlen($password) < $min_password_length) {
     redirect_with_error("Password must be at least ".$min_password_length." characters long.");
 }
@@ -80,4 +83,4 @@ $conn->close();
 
 // Redirect to login page
 $message = "Registration successful, log in to continue";
-header("Location: ../login.php?u=".urlencode($message));
+header("Location: ../login.php?err=".urlencode($message));
