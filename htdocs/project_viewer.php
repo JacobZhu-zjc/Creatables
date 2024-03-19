@@ -1,7 +1,38 @@
+<?php
+require("api/config.php");
+
+if (!isset($_GET["id"]) || strlen($_GET["id"]) == 0) {
+    echo("<h1>Please specify a project</h1>");
+    die();
+}
+
+$conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
+$stmt = $conn->prepare("SELECT * FROM Projects_PostsProject WHERE PID=?");
+$stmt->bind_param("i", $_GET["id"]);
+$stmt->execute();
+$results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+if (count($results) != 1) {
+    $conn->close();
+    echo("<h1>Project not found</h1>");
+    die();
+}
+// We will use this to generate HTML
+$result = $results[0];
+
+$stmt = $conn->prepare("SELECT * FROM Images_ContainsImages WHERE PID=?");
+$stmt->bind_param("i", $_GET["id"]);
+$stmt->execute();
+$results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$conn->close();
+
+function index_sort($img1, $img2) {
+    return $img1["GalleryIndex"] - $img2["GalleryIndex"];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>How to grow big beans</title>
+    <title><?= $result["Name"] ?></title>
     <style>
         body {
             margin: 5%;
@@ -55,21 +86,29 @@
     </style>
 </head>
 <body>
-    <h1>How to grow big beans</h1>
-    <h2><a href="">JSKONS</a></h2>
+    <h1><?= $result["Name"] ?></h1>
+    <h2><a href="profile.php?u=<?= urlencode($result["Username"]) ?>"><?= $result["Username"] ?></a></h2>
     Jan. 31, 2024
-    <input type="submit" value="DELETE" id="delete_button">
+<!--    <input type="submit" value="DELETE" id="delete_button">-->
     <input type="submit" value="I MADE THIS!" id="complete_button">
     <div id="instruction_text">
         <p>
-            This is how everyone can grow massive beans at home! Simply start by soaking some beans in water, then wrapping in a damp paper towel and letting sit on your countertop for a couple of days! Then, wait for them to sprout. At this point, you can plant them in some dirt at a shallow level, and add water as required! In just a couple of weeks, you'll have some bean plants of your own, and in a month or two, you'll be sure to have some impossibly humongous, veiny beans!
+            <?= $result["InstructionText"] ?>
         </p>
     </div>
     <div>
-        <h3>Gallery:</h3>
-        <img src="" alt="Some caption here!">
-        <img src="" alt="Some caption here!">
-        <img src="" alt="Some caption here!">
+        <?php
+        if (count($results) > 0) {
+            echo("<h3>Gallery:</h3>");
+            usort($results, "index_sort");
+            foreach($results as $image) {
+                echo(get_image_tag_from_blob($image["ImageData"]));
+                echo("<br>");
+                echo("<p>".$image["Caption"]."</p>");
+                echo("<hr>");
+            }
+        }
+        ?>
     </div>
     <div>
         <h3>Reviews:</h3>

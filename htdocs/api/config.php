@@ -8,4 +8,10 @@ $db_name = "creatables";
 $password_hash = "md5";
 $min_username_length = 5;
 $min_password_length = 5;
+
+// Begin shared functions
+function get_image_tag_from_blob($blob) {
+    $b64 = base64_encode($blob);
+    return '<img src="data:image/png;base64,'.$b64.'">';
+}
 ?>
