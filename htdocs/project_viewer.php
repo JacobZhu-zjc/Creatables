@@ -19,15 +19,11 @@ if (count($results) != 1) {
 // We will use this to generate HTML
 $result = $results[0];
 
-$stmt = $conn->prepare("SELECT * FROM Images_ContainsImages WHERE PID=?");
+$stmt = $conn->prepare("SELECT * FROM Images_ContainsImages WHERE PID=? ORDER BY GalleryIndex");
 $stmt->bind_param("i", $_GET["id"]);
 $stmt->execute();
 $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $conn->close();
-
-function index_sort($img1, $img2) {
-    return $img1["GalleryIndex"] - $img2["GalleryIndex"];
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +96,6 @@ function index_sort($img1, $img2) {
         <?php
         if (count($results) > 0) {
             echo("<h3>Gallery:</h3>");
-            usort($results, "index_sort");
             foreach($results as $image) {
                 echo(get_image_tag_from_blob($image["ImageData"]));
                 echo("<br>");

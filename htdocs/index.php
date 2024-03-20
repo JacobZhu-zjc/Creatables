@@ -1,3 +1,12 @@
+<?php
+require("api/config.php");
+
+$conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
+$stmt = $conn->prepare("SELECT * FROM Projects_PostsProject ORDER BY Timestamp DESC LIMIT $front_page_posts");
+$stmt->execute();
+$results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,22 +36,17 @@
     <a href="login.php">LOG IN</a>
     <h3>Recent projects:</h3>
     <table class="center">
-        <tr>
-            <td><a href="#">How to grow big beans</a></td>
-            <td><br>JSKONS</td>
-        </tr>
-        <tr>
-            <td><a href="#">Grandma's smoothie recipe</a></td>
-            <td><br>G-dawg</td>
-        </tr>
-        <tr>
-            <td><a href="#">Build a robot in 10 mins</a></td>
-            <td><br>bingwad</td>
-        </tr>
-        <tr>
-            <td><a href="#">Lorem ipsum dolor</a></td>
-            <td><br>JSKONS</td>
-        </tr>
+        <tbody>
+        <?php
+        foreach ($results as $result) {
+            echo("<tr>");
+            echo('<td><a href="project_viewer.php?id='.$result["PID"].'">');
+            echo($result["Name"]."</a></td>");
+            echo("<td><br>".$result["Username"]);
+            echo("</td></tr>");
+        }
+        ?>
+        </tbody>
     </table>
 </body>
 </html>
