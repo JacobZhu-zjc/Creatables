@@ -20,16 +20,15 @@
     </style>
     <script>
         function removeLastTool() {
-            var table = document.getElementById("toolTable");
+            let table = document.getElementById("toolTable");
             table.removeChild(table.lastElementChild);
         }
 
         function removeLastMaterial() {
-            var table = document.getElementById("materialTable");
+            let table = document.getElementById("materialTable");
             table.removeChild(table.lastElementChild);
         }
 
-        //see elem count to identify
         function getMaterialCount() {
             return document.getElementById("materialTable").children.length;
         }
@@ -39,32 +38,24 @@
         }
 
         function addMaterial() {
-            var row = document.createElement("tr");
+            let row = document.createElement("tr");
 
-            var name = document.createElement("td");
-            var nameInput = document.createElement("input");
+            let name = document.createElement("td");
+            let nameInput = document.createElement("input");
             nameInput.setAttribute("type", "text");
             nameInput.setAttribute("placeholder", "Name");
             nameInput.setAttribute("name", "name" + getMaterialCount());
             name.appendChild(nameInput);
 
-            var quantity = document.createElement("td");
-            var quantityInput = document.createElement("input");
+            let quantity = document.createElement("td");
+            let quantityInput = document.createElement("input");
             quantityInput.setAttribute("type", "text");
             quantityInput.setAttribute("placeholder", "Quantity");
             quantityInput.setAttribute("quantity", "quantity" + getMaterialCount());
             quantity.appendChild(quantityInput);
 
-
-            var quantity = document.createElement("td");
-            var quantityInput = document.createElement("input");
-            quantityInput.setAttribute("type", "text");
-            quantityInput.setAttribute("placeholder", "Quantity");
-            quantityInput.setAttribute("quantity", "quantity" + getMaterialCount());
-            quantity.appendChild(quantityInput);
-
-            var unit = document.createElement("td");
-            var unitInput = document.createElement("input");
+            let unit = document.createElement("td");
+            let unitInput = document.createElement("input");
             unitInput.setAttribute("type", "text");
             unitInput.setAttribute("placeholder", "Unit");
             unitInput.setAttribute("unit", "unit" + getMaterialCount());
@@ -78,24 +69,24 @@
         }
 
         function addTool() {
-            var row = document.createElement("tr");
+            let row = document.createElement("tr");
 
-            var name = document.createElement("td");
-            var nameInput = document.createElement("input");
+            let name = document.createElement("td");
+            let nameInput = document.createElement("input");
             nameInput.setAttribute("type", "text");
             nameInput.setAttribute("placeholder", "Name");
             nameInput.setAttribute("name", "name" + getToolCount());
             name.appendChild(nameInput);
 
-            var purchaseLink = document.createElement("td");
-            var purchaseLinkInput = document.createElement("input");
+            let purchaseLink = document.createElement("td");
+            let purchaseLinkInput = document.createElement("input");
             purchaseLinkInput.setAttribute("type", "text");
             purchaseLinkInput.setAttribute("placeholder", "Purchase Link");
             purchaseLinkInput.setAttribute("name", "purchaseLink" + getToolCount());
             purchaseLink.appendChild(purchaseLinkInput);
 
-            var brandName = document.createElement("td");
-            var brandNameInput = document.createElement("input");
+            let brandName = document.createElement("td");
+            let brandNameInput = document.createElement("input");
             brandNameInput.setAttribute("type", "text");
             brandNameInput.setAttribute("placeholder", "Brand Name");
             brandNameInput.setAttribute("name", "brandName" + getToolCount());
@@ -103,17 +94,46 @@
 
             row.appendChild(name);
             row.appendChild(purchaseLink);
-            row.appendChild(brandNames);
+            row.appendChild(brandName);
 
             document.getElementById("toolTable").appendChild(row);
         }
 
-        
+        function postForm() {
+            let form = document.getElementById("form");
+            let files = document.getElementById("imagePicker").files;
+            if (files.length == 0) {
+                form.submit();
+            }
+            let addedImages = 0;
+            for (let file of files) {
+                let reader = new FileReader();
+                reader.onload = () => {
+                    let input = document.createElement("input");
+                    input.setAttribute("value", reader.result);
+                    input.setAttribute("name", "imageData" + addedImages);
+                    input.setAttribute("type", "text");
+                    input.setAttribute("style", "display:none");
+                    let name = document.createElement("input");
+                    name.setAttribute("value", file.name);
+                    name.setAttribute("name", "imageName" + addedImages);
+                    name.setAttribute("type", "text");
+                    name.setAttribute("style", "display:none");
+                    form.appendChild(name);
+                    form.appendChild(input);
+                    addedImages++;
+                    if (addedImages == files.length) {
+                        form.submit();
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
     </script>
 </head>
 <body>
 <h1>POST PROJECT</h1>
-<form action="api/post_project.php" method="post">
+<form action="api/post_project.php" method="post" id="form">
     <label for="title">Title:</label>
     <input id="title" name="title">
     <br>
@@ -149,9 +169,10 @@
     <br>
     <label>Add images:</label>
     <br>
-    <input multiple type="file" accept="image/png" name="image" onchange="console.log('asdasdas')"></button>
+    <input multiple type="file" accept="image/png" id="imagePicker"></button>
     <br>
-    <input type="submit" value="POST PROJECT">
+    <br>
+    <input type="button" onclick="postForm()" value="POST PROJECT">
 </form>
 </body>
 </html>
