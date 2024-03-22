@@ -83,7 +83,7 @@
 
             let purchaseLink = document.createElement("td");
             let purchaseLinkInput = document.createElement("input");
-            purchaseLinkInput.setAttribute("type", "text");
+            purchaseLinkInput.setAttribute("type", "url");
             purchaseLinkInput.setAttribute("placeholder", "Purchase Link");
             purchaseLinkInput.setAttribute("maxlength", "100");
             purchaseLinkInput.setAttribute("name", "link[]");
@@ -131,14 +131,14 @@
 <h1>POST PROJECT</h1>
 <form action="api/post_project.php" method="post" id="form">
     <label for="title">Title:</label>
-    <input id="title" name="title" maxlength="60">
+    <input id="title" name="title" maxlength="60" required>
     <br>
     <label>Tools:</label>
     <table>
     <tbody id="toolTable">
         <tr>
             <td><input type="text" placeholder="Name" name="toolName[]" maxlength="60"></td>
-            <td><input type="text" placeholder="Purchase Link" name="link[]" maxlength="100"></td>
+            <td><input type="url" placeholder="Purchase Link" name="link[]" maxlength="100"></td>
         </tr>
     </tbody>
     </table>
@@ -160,7 +160,8 @@
     <br>
     <label for="instructions">Instructions:</label>
     <br>
-    <textarea id="instructions" name="instructions" class="bottomSpace" maxlength="2500"></textarea>
+    <textarea id="instructions" name="instructions" class="bottomSpace" maxlength="2500" required>
+    </textarea>
     <br>
     <label>Add images:</label>
     <br>

@@ -28,10 +28,10 @@
 </em>
 <form action="api/register_user.php" method="post">
     <label for="username">Username:</label>
-    <input type="text" name="username" id="username" maxlength="40">
+    <input type="text" name="username" id="username" maxlength="40" required>
     <br>
     <label for="password">Password:</label>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" required>
     <br>
     <label for="password_confirm">Confirm password:</label>
     <input type="password" name="password_confirm" id="password_confirm">
