@@ -10,12 +10,12 @@ $username = $_SESSION["username"];
 if (!isset($_POST["title"]) || strlen($_POST["title"]) == 0) {
      die("todo1");
 }
-$title = $_POST["title"];
+$title = htmlspecialchars($_POST["title"]);
 
 if (!isset($_POST["instructions"]) || strlen($_POST["instructions"]) == 0) {
     die("todo2");
 }
-$instructions = $_POST["instructions"];
+$instructions = htmlspecialchars($_POST["instructions"]);
 
 // Parse materials
 $materials = [];
@@ -23,9 +23,9 @@ if (isset($_POST["materialName"]) && isset($_POST["quantity"]) && isset($_POST["
         && count($_POST["materialName"]) == count($_POST["quantity"])
         && count($_POST["quantity"]) == count($_POST["unit"])) {
     for ($i = 0; $i < count($_POST["materialName"]); $i++) {
-        $newMaterial["name"] = $_POST["materialName"][$i];
+        $newMaterial["name"] = htmlspecialchars($_POST["materialName"][$i]);
         $newMaterial["quantity"] = $_POST["quantity"][$i];
-        $newMaterial["unit"] = $_POST["unit"][$i];
+        $newMaterial["unit"] = htmlspecialchars($_POST["unit"][$i]);
         $materials[] = $newMaterial;
     }
 }
@@ -35,8 +35,8 @@ $tools = [];
 if (isset($_POST["toolName"]) && isset($_POST["link"]) && isset($_POST["brand"]) 
         && count($_POST["toolName"]) == count($_POST["link"])) {
     for ($i = 0; $i < count($_POST["toolName"]); $i++) {
-        $newTool["name"] = $_POST["toolName"][$i];
-        $newTool["purchaseLink"] = $_POST["link"][$i];
+        $newTool["name"] = htmlspecialchars($_POST["toolName"][$i]);
+        $newTool["purchaseLink"] = htmlspecialchars($_POST["link"][$i]);
         $tools[] = $newTool;
     }
 }
@@ -45,7 +45,7 @@ $images = [];
 if (isset($_POST["imageName"]) && isset($_POST["imageData"]) 
         && count($_POST["imageName"]) == count($_POST["imageData"])) {
     for ($i = 0; $i < count($_POST["imageName"]); $i++) {
-        $newImage["name"] = $_POST["imageName"][$i];
+        $newImage["name"] = htmlspecialchars($_POST["imageName"][$i]);
         $newImage["data"] = b64_url_to_binary($_POST["imageData"][$i]);
         $images[] = $newImage;
     }
@@ -68,7 +68,7 @@ foreach ($materials as $material) {
 }
 
 $stmt = $conn->prepare("INSERT INTO Images_ContainsImages VALUES (?,?,?,?)");
-for ($i = 0; $i < count($_POST["imageName"]); $i++) {
+for ($i = 0; $i < count($images); $i++) {
     $oneIndex = $i + 1;
     $stmt->bind_param("issi", $oneIndex, $images[$i]["data"], $images[$i]["name"], $pid);
     $stmt->execute();

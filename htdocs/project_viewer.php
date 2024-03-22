@@ -6,9 +6,11 @@ if (!isset($_GET["id"]) || strlen($_GET["id"]) == 0) {
     die();
 }
 
+$pid = $_GET["id"];
+
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
 $stmt = $conn->prepare("SELECT * FROM Projects_PostsProject WHERE PID=?");
-$stmt->bind_param("i", $_GET["id"]);
+$stmt->bind_param("i", $pid);
 $stmt->execute();
 $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 if (count($results) != 1) {
@@ -20,10 +22,16 @@ if (count($results) != 1) {
 $result = $results[0];
 
 $stmt = $conn->prepare("SELECT * FROM Images_ContainsImages WHERE PID=? ORDER BY GalleryIndex");
-$stmt->bind_param("i", $_GET["id"]);
+$stmt->bind_param("i", $pid);
 $stmt->execute();
-$results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$images = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $conn->close();
+
+$logged_in_as_creator = false;
+session_start();
+if (isset($_SESSION["username"])) {
+    $logged_in_as_creator = $_SESSION["username"] == $result["Username"];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,8 +92,15 @@ $conn->close();
 <body>
     <h1><?= $result["Name"] ?></h1>
     <h2><a href="profile.php?u=<?= urlencode($result["Username"]) ?>"><?= $result["Username"] ?></a></h2>
-    Jan. 31, 2024
-<!--    <input type="submit" value="DELETE" id="delete_button">-->
+    <?= $result["Timestamp"] ?>
+    <?php
+    if ($logged_in_as_creator) {
+        echo('<form action="api/delete_project.php" method="post">');
+        echo('<input type="submit" value="DELETE" id="delete_button">');
+        echo('<input type="text" value="'.$pid.'" name="id" style="display:none">');
+        echo("</form>");
+    }
+    ?>
     <input type="submit" value="I MADE THIS!" id="complete_button">
     <div id="instruction_text">
         <p>
@@ -94,9 +109,9 @@ $conn->close();
     </div>
     <div>
         <?php
-        if (count($results) > 0) {
+        if (count($images) > 0) {
             echo("<h3>Gallery:</h3>");
-            foreach($results as $image) {
+            foreach($images as $image) {
                 echo(get_image_tag_from_blob($image["ImageData"]));
                 echo("<br>");
                 echo("<p>".$image["Caption"]."</p>");
@@ -134,7 +149,6 @@ $conn->close();
             <option value="stars">Star rating</option>
             <option value="image">Upload image</option>
         </select>
-
         <form action="">
             <input type="text" placeholder="Add a title!" id="title_input">
             <br>
