@@ -38,6 +38,5 @@ if (count($result) == 0) {
 }
 // Success! Create session, redirect to profile
 session_start();
-$_SESSION["logged_in"] = true;
 $_SESSION["username"] = $username;
 header("Location: ../profile.php?u=".urlencode($username));

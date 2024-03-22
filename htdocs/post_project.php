@@ -44,21 +44,21 @@
             let nameInput = document.createElement("input");
             nameInput.setAttribute("type", "text");
             nameInput.setAttribute("placeholder", "Name");
-            nameInput.setAttribute("name", "name" + getMaterialCount());
+            nameInput.setAttribute("name", "materialName[]");
             name.appendChild(nameInput);
 
             let quantity = document.createElement("td");
             let quantityInput = document.createElement("input");
-            quantityInput.setAttribute("type", "text");
+            quantityInput.setAttribute("type", "number");
             quantityInput.setAttribute("placeholder", "Quantity");
-            quantityInput.setAttribute("quantity", "quantity" + getMaterialCount());
+            quantityInput.setAttribute("name", "quantity[]");
             quantity.appendChild(quantityInput);
 
             let unit = document.createElement("td");
             let unitInput = document.createElement("input");
             unitInput.setAttribute("type", "text");
             unitInput.setAttribute("placeholder", "Unit");
-            unitInput.setAttribute("unit", "unit" + getMaterialCount());
+            unitInput.setAttribute("name", "unit[]");
             unit.appendChild(unitInput);
 
             row.appendChild(name);
@@ -75,21 +75,21 @@
             let nameInput = document.createElement("input");
             nameInput.setAttribute("type", "text");
             nameInput.setAttribute("placeholder", "Name");
-            nameInput.setAttribute("name", "name" + getToolCount());
+            nameInput.setAttribute("name", "toolName[]");
             name.appendChild(nameInput);
 
             let purchaseLink = document.createElement("td");
             let purchaseLinkInput = document.createElement("input");
             purchaseLinkInput.setAttribute("type", "text");
             purchaseLinkInput.setAttribute("placeholder", "Purchase Link");
-            purchaseLinkInput.setAttribute("name", "purchaseLink" + getToolCount());
+            purchaseLinkInput.setAttribute("name", "link[]");
             purchaseLink.appendChild(purchaseLinkInput);
 
             let brandName = document.createElement("td");
             let brandNameInput = document.createElement("input");
             brandNameInput.setAttribute("type", "text");
             brandNameInput.setAttribute("placeholder", "Brand Name");
-            brandNameInput.setAttribute("name", "brandName" + getToolCount());
+            brandNameInput.setAttribute("name", "brand[]");
             brandName.appendChild(brandNameInput);
 
             row.appendChild(name);
@@ -111,12 +111,12 @@
                 reader.onload = () => {
                     let input = document.createElement("input");
                     input.setAttribute("value", reader.result);
-                    input.setAttribute("name", "imageData" + addedImages);
+                    input.setAttribute("name", "imageData[]");
                     input.setAttribute("type", "text");
                     input.setAttribute("style", "display:none");
                     let name = document.createElement("input");
                     name.setAttribute("value", file.name);
-                    name.setAttribute("name", "imageName" + addedImages);
+                    name.setAttribute("name", "imageName[]");
                     name.setAttribute("type", "text");
                     name.setAttribute("style", "display:none");
                     form.appendChild(name);
@@ -138,12 +138,12 @@
     <input id="title" name="title">
     <br>
     <label>Tools:</label>
-    <table id="toolTable">
-    <tbody>
+    <table>
+    <tbody id="toolTable">
         <tr>
-            <td><input type="text" placeholder="Name" name="name0"></td>
-            <td><input type="text" placeholder="Purchase Link" name="link0"></td>
-            <td><input type="text" placeholder="Brand Name" name="brand0"></td>
+            <td><input type="text" placeholder="Name" name="toolName[]"></td>
+            <td><input type="text" placeholder="Purchase Link" name="link[]"></td>
+            <td><input type="text" placeholder="Brand Name" name="brand[]"></td>
         </tr>
     </tbody>
     </table>
@@ -154,9 +154,9 @@
     <table>
     <tbody id="materialTable">
         <tr>
-            <td><input type="text" placeholder="Name" name="name0"></td>
-            <td><input type="text" placeholder="Quantity" name="qty0"></td>
-            <td><input type="text" placeholder="Unit" name="unit0"></td>
+            <td><input type="text" placeholder="Name" name="materialName[]"></td>
+            <td><input type="number" placeholder="Quantity" name="quantity[]"></td>
+            <td><input type="text" placeholder="Unit" name="unit[]"></td>
         </tr>
     </tbody>
     </table>

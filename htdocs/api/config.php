@@ -16,4 +16,7 @@ function get_image_tag_from_blob($blob) {
     $b64 = base64_encode($blob);
     return '<img src="data:image/png;base64,'.$b64.'">';
 }
+function b64_url_to_binary($data) {
+    return base64_decode(explode(",", $data, 2)[1]);
+}
 ?>

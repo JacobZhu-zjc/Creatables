@@ -30,7 +30,7 @@ $time = date_create("now", new DateTimeZone($prefix.$utc_offset));
 <button class="offsetRight">Log out</button><button class="offsetRight">Inbox</button>
 <h3>Vancouver, Canada (Local Time: <?php echo($time->format("h:i")); ?>)</h3>
 <br>
-<h2>Guides</h2><button class="offsetRight">Create New</button>
+<h2>Guides</h2><button class="offsetRight" onclick="location.href='https://google.ca'">Create New</button>
 <div>
     <ul>
         <li><a href="#">Cool guide</a></li>
