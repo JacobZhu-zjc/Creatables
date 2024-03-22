@@ -32,7 +32,7 @@ if (isset($_POST["materialName"]) && isset($_POST["quantity"]) && isset($_POST["
 
 // Parse tools 
 $tools = [];
-if (isset($_POST["toolName"]) && isset($_POST["link"]) && isset($_POST["brand"]) 
+if (isset($_POST["toolName"]) && isset($_POST["link"])
         && count($_POST["toolName"]) == count($_POST["link"])) {
     for ($i = 0; $i < count($_POST["toolName"]); $i++) {
         $newTool["name"] = htmlspecialchars($_POST["toolName"][$i]);

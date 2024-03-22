@@ -28,7 +28,7 @@
 </em>
 <form action="api/register_user.php" method="post">
     <label for="username">Username:</label>
-    <input type="text" name="username" id="username">
+    <input type="text" name="username" id="username" maxlength="40">
     <br>
     <label for="password">Password:</label>
     <input type="password" name="password" id="password">

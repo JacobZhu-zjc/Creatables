@@ -45,6 +45,7 @@
             nameInput.setAttribute("type", "text");
             nameInput.setAttribute("placeholder", "Name");
             nameInput.setAttribute("name", "materialName[]");
+            nameInput.setAttribute("maxlength", "60");
             name.appendChild(nameInput);
 
             let quantity = document.createElement("td");
@@ -59,6 +60,7 @@
             unitInput.setAttribute("type", "text");
             unitInput.setAttribute("placeholder", "Unit");
             unitInput.setAttribute("name", "unit[]");
+            unitInput.setAttribute("maxlength", "10");
             unit.appendChild(unitInput);
 
             row.appendChild(name);
@@ -75,6 +77,7 @@
             let nameInput = document.createElement("input");
             nameInput.setAttribute("type", "text");
             nameInput.setAttribute("placeholder", "Name");
+            nameInput.setAttribute("maxlength", "60");
             nameInput.setAttribute("name", "toolName[]");
             name.appendChild(nameInput);
 
@@ -82,19 +85,12 @@
             let purchaseLinkInput = document.createElement("input");
             purchaseLinkInput.setAttribute("type", "text");
             purchaseLinkInput.setAttribute("placeholder", "Purchase Link");
+            purchaseLinkInput.setAttribute("maxlength", "100");
             purchaseLinkInput.setAttribute("name", "link[]");
             purchaseLink.appendChild(purchaseLinkInput);
 
-            let brandName = document.createElement("td");
-            let brandNameInput = document.createElement("input");
-            brandNameInput.setAttribute("type", "text");
-            brandNameInput.setAttribute("placeholder", "Brand Name");
-            brandNameInput.setAttribute("name", "brand[]");
-            brandName.appendChild(brandNameInput);
-
             row.appendChild(name);
             row.appendChild(purchaseLink);
-            row.appendChild(brandName);
 
             document.getElementById("toolTable").appendChild(row);
         }
@@ -102,7 +98,7 @@
         function postForm() {
             let form = document.getElementById("form");
             let files = document.getElementById("imagePicker").files;
-            if (files.length == 0) {
+            if (files.length === 0) {
                 form.submit();
             }
             let addedImages = 0;
@@ -122,7 +118,7 @@
                     form.appendChild(name);
                     form.appendChild(input);
                     addedImages++;
-                    if (addedImages == files.length) {
+                    if (addedImages === files.length) {
                         form.submit();
                     }
                 };
@@ -135,15 +131,14 @@
 <h1>POST PROJECT</h1>
 <form action="api/post_project.php" method="post" id="form">
     <label for="title">Title:</label>
-    <input id="title" name="title">
+    <input id="title" name="title" maxlength="60">
     <br>
     <label>Tools:</label>
     <table>
     <tbody id="toolTable">
         <tr>
-            <td><input type="text" placeholder="Name" name="toolName[]"></td>
-            <td><input type="text" placeholder="Purchase Link" name="link[]"></td>
-            <td><input type="text" placeholder="Brand Name" name="brand[]"></td>
+            <td><input type="text" placeholder="Name" name="toolName[]" maxlength="60"></td>
+            <td><input type="text" placeholder="Purchase Link" name="link[]" maxlength="100"></td>
         </tr>
     </tbody>
     </table>
@@ -154,9 +149,9 @@
     <table>
     <tbody id="materialTable">
         <tr>
-            <td><input type="text" placeholder="Name" name="materialName[]"></td>
+            <td><input type="text" placeholder="Name" name="materialName[]" maxlength="60"></td>
             <td><input type="number" placeholder="Quantity" name="quantity[]"></td>
-            <td><input type="text" placeholder="Unit" name="unit[]"></td>
+            <td><input type="text" placeholder="Unit" name="unit[]" maxlength="10"></td>
         </tr>
     </tbody>
     </table>
@@ -165,7 +160,7 @@
     <br>
     <label for="instructions">Instructions:</label>
     <br>
-    <textarea id="instructions" name="instructions" class="bottomSpace"></textarea>
+    <textarea id="instructions" name="instructions" class="bottomSpace" maxlength="2500"></textarea>
     <br>
     <label>Add images:</label>
     <br>
