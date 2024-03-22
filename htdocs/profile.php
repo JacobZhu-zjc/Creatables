@@ -1,7 +1,17 @@
 <?php
+
+require("api/config.php");
 $utc_offset = -8;
 $prefix = $utc_offset >= 0 ? "+" : "";
 $time = date_create("now", new DateTimeZone($prefix.$utc_offset));
+
+
+
+$conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
+$stmt = $conn->prepare("SELECT * FROM Projects_PostsProject ORDER BY Timestamp DESC LIMIT $front_page_posts");
+$stmt->execute();
+$results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +40,7 @@ $time = date_create("now", new DateTimeZone($prefix.$utc_offset));
 <button class="offsetRight">Log out</button><button class="offsetRight">Inbox</button>
 <h3>Vancouver, Canada (Local Time: <?php echo($time->format("h:i")); ?>)</h3>
 <br>
-<h2>Guides</h2><button class="offsetRight" onclick="location.href='post_project.php'">Create New</button>
+<h2>Guides</h2><button class="offsetRight" onclick="location.href='https://google.ca'">Create New</button>
 <div>
     <ul>
         <li><a href="#">Cool guide</a></li>

@@ -17,6 +17,9 @@
         button {
             margin-right: 5px;
         }
+        #error {
+            color: red;
+        }
     </style>
     <script>
         function removeLastTool() {
@@ -128,6 +131,16 @@
     </script>
 </head>
 <body>
+<em id="error">
+    <strong>
+        <?php
+        if (isset($_GET["err"]) && strlen($_GET["err"])) {
+            echo(htmlentities($_GET["err"]));
+            echo("<br><br>");
+        }
+        ?>
+    </strong>
+</em>
 <h1>POST PROJECT</h1>
 <form action="api/post_project.php" method="post" id="form">
     <label for="title">Title:</label>

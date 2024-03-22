@@ -1,20 +1,35 @@
 <?php
 require("config.php");
 
+function redirect_to_error_page($message) {
+    header("Location: ../error.php?err=".urlencode($message));
+    die();
+}
+
+function redirect_with_error($message) {
+    header("Location: ../post_project.php?err=".urlencode($message));
+    die();
+}
+
 session_start();
+
+if (!isset($_POST["instructions"]) || strlen($_POST["instructions"]) == 0) {
+    redirect_with_error("You must enter valid instructions");
+}
+
 if (!isset($_SESSION["username"])) {
-    die("todo0");
+    redirect_to_error_page("You must be logged in to view projects");
 }
 $username = $_SESSION["username"];
 
+
+
 if (!isset($_POST["title"]) || strlen($_POST["title"]) == 0) {
-     die("todo1");
+    redirect_with_error("You must enter a tisle");
 }
 $title = htmlspecialchars($_POST["title"]);
 
-if (!isset($_POST["instructions"]) || strlen($_POST["instructions"]) == 0) {
-    die("todo2");
-}
+
 $instructions = htmlspecialchars($_POST["instructions"]);
 
 // Parse materials
