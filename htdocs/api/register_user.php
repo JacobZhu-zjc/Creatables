@@ -1,8 +1,6 @@
 <?php
 require("config.php");
 
-
-header("Location: ../register.php?err=".urlencode("as"));
 function redirect_with_error($message) {
     header("Location: ../register.php?err=".urlencode($message));
     die();
@@ -30,7 +28,11 @@ $city = $_POST["city"];
 if ($password != $password_confirm) {
     redirect_with_error("Passwords must match");
 }
-$city_name;
+if ($username != htmlspecialchars($username)) {
+    redirect_with_error("Username contains disallowed characters");
+}
+
+$city_name = "";
 switch ($city) {
     case "vancouver":
         $city_name = "Vancouver";
@@ -78,8 +80,9 @@ if (count($result) != 0) {
 
 // Success! Create account
 // The City_Timezone association should already have been set up in the database script
+$hashed = hash($password_hash, $password);
 $stmt = $conn->prepare("INSERT INTO Users (Username, PasswordHash, City) VALUES (?, ?, ?)");
-$stmt->bind_param("sss", $username, hash($password_hash, $password), $city_name);
+$stmt->bind_param("sss", $username, $hashed, $city_name);
 $stmt->execute();
 $conn->close();
 
