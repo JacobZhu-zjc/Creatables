@@ -21,10 +21,28 @@ if (count($results) != 1) {
 // We will use this to generate HTML
 $result = $results[0];
 
+// Get images
 $stmt = $conn->prepare("SELECT * FROM Images_ContainsImages WHERE PID=? ORDER BY GalleryIndex");
 $stmt->bind_param("i", $pid);
 $stmt->execute();
 $images = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Get equipment
+$stmt = $conn->prepare("SELECT b.Name, a.PurchaseLink ".
+    "FROM Equipment_NeedsTools a, PurchaseLink_Name b, Projects_PostsProject c ".
+    "WHERE a.PID = c.PID AND a.PurchaseLink = b.PurchaseLink AND c.PID=?");
+$stmt->bind_param("i", $pid);
+$stmt->execute();
+$tools = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Get materials
+$stmt = $conn->prepare("SELECT a.Name, Quantity, QuantityUnit ".
+    "FROM Materials_MadeWith a, Projects_PostsProject b ".
+    "WHERE a.PID = b.PID AND b.PID = ?");
+$stmt->bind_param("i", $pid);
+$stmt->execute();
+$materials = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
 $conn->close();
 
 $logged_in_as_creator = false;
@@ -39,21 +57,27 @@ if (isset($_SESSION["username"])) {
     <title><?= $result["Name"] ?></title>
     <style>
         body {
-            margin: 5%;
+            margin-left: 5%;
+            margin-right: 5%;
         }
+
         div {
             width: 100%;
         }
+
         image {
             height: 100px;
             width: auto;
         }
-        a {
+
+        h2 a {
             font-style: italic;
         }
+
         li {
             margin-bottom: 10px;
         }
+
         #delete_button {
             color: red;
             border: 1px solid red;
@@ -62,26 +86,31 @@ if (isset($_SESSION["username"])) {
             min-height: 33px;
             margin: 5px;
         }
+
         #complete_button {
             float: right;
             min-width: 100px;
             min-height: 33px;
             margin: 5px;
         }
-        #instruction_text {
-            margin-top: 50px;
-            height: 25%;
+
+        .top-margin {
+            margin-top: 30px;
         }
+
         #review_content {
             border: 1px solid black;
         }
+
         #comment_type {
             margin-bottom: 10px;
         }
+
         #title_input {
             width: 100%;
             margin-bottom: 10px;
         }
+
         #comment_input {
             width: 100%;
             min-height: 150px;
@@ -90,72 +119,99 @@ if (isset($_SESSION["username"])) {
     </style>
 </head>
 <body>
-    <h1><?= $result["Name"] ?></h1>
-    <h2><a href="profile.php?u=<?= urlencode($result["Username"]) ?>"><?= $result["Username"] ?></a></h2>
-    <?= $result["Timestamp"] ?>
-    <?php
-    if ($logged_in_as_creator) {
-        echo('<form action="api/delete_project.php" method="post">');
-        echo('<input type="submit" value="DELETE" id="delete_button">');
-        echo('<input type="text" value="'.$pid.'" name="id" style="display:none">');
-        echo("</form>");
-    }
-    ?>
-    <input type="submit" value="I MADE THIS!" id="complete_button">
-    <div id="instruction_text">
-        <p>
-            <?= $result["InstructionText"] ?>
-        </p>
-    </div>
-    <div>
-        <?php
-        if (count($images) > 0) {
-            echo("<h3>Gallery:</h3>");
-            foreach($images as $image) {
-                echo(get_image_tag_from_blob($image["ImageData"]));
-                echo("<br>");
-                echo("<p>".$image["Caption"]."</p>");
-                echo("<hr>");
-            }
+<h1><?= $result["Name"] ?></h1>
+<h2>By <a href="profile.php?u=<?= urlencode($result["Username"]) ?>"><?= $result["Username"] ?></a></h2>
+<?= $result["Timestamp"] ?>
+<?php
+if ($logged_in_as_creator) {
+    echo('<form action="api/delete_project.php" method="post">');
+    echo('<input type="submit" value="DELETE" id="delete_button">');
+    echo('<input type="text" value="' . $pid . '" name="id" style="display:none">');
+    echo("</form>");
+}
+?>
+<input type="submit" value="I MADE THIS!" id="complete_button">
+<?php
+    if (count($tools) > 0) {
+        echo('<div class="top-margin">');
+        echo("<h3>Equipment:</h3>");
+        echo("<ul>");
+        foreach ($tools as $tool) {
+            echo("<li>");
+            echo('<a href="'.$tool["PurchaseLink"].'" target="_blank">'.$tool["Name"]."</a>");
+            echo("</li>");
         }
-        ?>
+        echo("</ul>");
+        echo("</div>");
+    }
+    if (count($materials) > 0) {
+        echo('<div class="top-margin">');
+        echo("<h3>Materials:</h3>");
+        echo("<ul>");
+        foreach ($materials as $material) {
+            echo("<li>");
+            echo($material["Name"]." (".$material["Quantity"]." ".$material["QuantityUnit"].")");
+            echo("</li>");
+        }
+        echo("</ul>");
+        echo("</div>");
+    }
+?>
+<div class="top-margin">
+    <h3>Instructions:</h3>
+    <p>
+        <?= $result["InstructionText"] ?>
+    </p>
+</div>
+<?php
+if (count($images) > 0) {
+    echo('<div class="top-margin">');
+    echo("<h3>Gallery:</h3>");
+    foreach ($images as $image) {
+        echo(get_image_tag_from_blob($image["ImageData"]));
+        echo("<br>");
+        echo("<p>" . $image["Caption"] . "</p>");
+        echo("<hr>");
+    }
+    echo("</div>");
+}
+?>
+<div>
+    <h3>Reviews:</h3>
+    <div id="review_content">
+        <ul>
+            <li>
+                Loved these instructions! Had massive beans in no time!
+                <br>
+                <a href="">BOBTHEGROWER</a>
+            </li>
+            <li>
+                3/5
+                <br>
+                <a href="">Jack</a>
+            </li>
+            <li>
+                <img src="" alt="Some caption here!">
+                <br>
+                <a href="">MelonMan</a>
+            </li>
+        </ul>
     </div>
-    <div>
-        <h3>Reviews:</h3>
-        <div id="review_content">
-            <ul>
-                <li>
-                    Loved these instructions! Had massive beans in no time!
-                    <br>
-                    <a href="">BOBTHEGROWER</a>
-                </li>
-                <li>
-                    3/5
-                    <br>
-                    <a href="">Jack</a>
-                </li>
-                <li>
-                    <img src="" alt="Some caption here!">
-                    <br>
-                    <a href="">MelonMan</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div>
-        <h3>Post a review:</h3>
-        <select name="Comment" id="comment_type">
-            <option value="text">Text</option>
-            <option value="stars">Star rating</option>
-            <option value="image">Upload image</option>
-        </select>
-        <form action="">
-            <input type="text" placeholder="Add a title!" id="title_input">
-            <br>
-            <textarea name="comment" placeholder="Say something nice..." id="comment_input"></textarea>
-            <br>
-            <input type="submit" value="POST">
-        </form>
-    </div>
+</div>
+<div>
+    <h3>Post a review:</h3>
+    <select name="Comment" id="comment_type">
+        <option value="text">Text</option>
+        <option value="stars">Star rating</option>
+        <option value="image">Upload image</option>
+    </select>
+    <form action="">
+        <input type="text" placeholder="Add a title!" id="title_input">
+        <br>
+        <textarea name="comment" placeholder="Say something nice..." id="comment_input"></textarea>
+        <br>
+        <input type="submit" value="POST">
+    </form>
+</div>
 </body>
 </html>
