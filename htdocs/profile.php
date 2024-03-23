@@ -50,7 +50,7 @@ $conn->close();
     </ul>
 </div>
 <br>
-<h2>Wishlists</h2><button class="offsetRight">Create New</button>
+<h2>Wishlists</h2><button class="offsetRight" onclick="href='create_wishlist.php'">Create New</button>
 <div>
     <ul>
         <li><a href="#">Epic list</a></li>

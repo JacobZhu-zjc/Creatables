@@ -25,7 +25,7 @@ $username = $_SESSION["username"];
 
 
 if (!isset($_POST["title"]) || strlen($_POST["title"]) == 0) {
-    redirect_with_error("You must enter a tisle");
+    redirect_with_error("You must enter a title");
 }
 $title = htmlspecialchars($_POST["title"]);
 
