@@ -25,7 +25,7 @@
 
 <form action="api/create_wishlist.php" method="post">
     <label for="title">Wishlist Title:</label>
-    <input type="text" id="title"><br>
+    <input type="text" id="title"><br><br>
     <input type="submit" value="POST">
 </form>
 </body>

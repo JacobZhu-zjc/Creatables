@@ -8,7 +8,7 @@ function redirect_to_error_page($message) {
 }
 
 function redirect_with_error($message) {
-    header("Location: ../post_project.php?err=".urlencode($message));
+    header("Location: ../create_wishlist.php?err=".urlencode($message));
     die();
 }
 
@@ -16,7 +16,7 @@ function redirect_with_error($message) {
 session_start();
 
 if (!isset($_SESSION["username"])) {
-    redirect_to_error_page("You must be logged in to view projects");
+    redirect_to_error_page("You must be logged in to view wishlists");
 }
 $username = $_SESSION["username"];
 
