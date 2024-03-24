@@ -60,7 +60,7 @@ $conn->close();
 </head>
 <body>
 <h1>INBOX</h1>
-<h3><?= $_SESSION["username"] ?></h3>
+<h3><a href="profile.php?u=<?= urlencode($_SESSION["username"]) ?>">Return to profile</a></h3>
 <input type="submit" value="Compose a message" onclick="location.href = 'compose_message.php'">
 <br>
 <table>
