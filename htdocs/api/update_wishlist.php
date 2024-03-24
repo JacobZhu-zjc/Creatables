@@ -25,12 +25,10 @@ if (!isset($_POST["projectID"]) || !filter_var($_POST["projectID"], FILTER_VALID
 }
 $projectID = $_POST["projectID"];
 
-if (!isset($_POST["WLID"]) || !filter_var($_POST["WLID"], FILTER_VALIDATE_INT) || $_POST["WLID"] < 1) {
-    // redirect_with_error("Error: wishlist ID invalid");
-    var_dump(!filter_var($_POST["WLID"], FILTER_VALIDATE_INT));
-    var_dump($_POST["WLID"] < 1);
+if (!isset($_POST["wishlistID"]) || !filter_var($_POST["wishlistID"], FILTER_VALIDATE_INT) || $_POST["wishlistID"] < 1) {
+    redirect_with_error("Error: wishlist ID invalid");
 }
-$wlid = $_POST["WLID"];
+$wishlistID = $_POST["wishlistID"];
 
 // Inserting tuple into database
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
@@ -39,7 +37,7 @@ if ($conn->connect_error) {
 }
 
 $stmt = $conn->prepare("INSERT INTO Contains (WLID, PID) VALUES (?,?)");
-$stmt->bind_param("ii", $wlid, $projectID);
+$stmt->bind_param("ii", $wishlistID, $projectID);
 $stmt->execute();
 $conn->close();
 

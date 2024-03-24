@@ -122,10 +122,9 @@ if (isset($_SESSION["username"])) {
     if ($logged_in_as_creator) {
         echo('<form action="api/update_wishlist.php" method="post">');
         echo('<input type="text" placeholder="Project ID" name="projectID">');
+        echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');
         echo('<input type="submit" value="ADD PROJECT">');
         echo('</form>');
-        // FIXME:
-        $_POST["WLID"] = $wlid;
     }
 ?>
 </body>
