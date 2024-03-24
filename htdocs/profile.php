@@ -44,7 +44,7 @@ $time = date_create("now", new DateTimeZone($prefix.$utc_offset));
     </ul>
 </div>
 <br>
-<h2>Wishlists</h2><button class="offsetRight" onclick="href='create_wishlist.php'">Create New</button>
+<h2>Wishlists</h2><button class="offsetRight" onclick="location.href='./create_wishlist.php'">Create New</button>
 <div>
     <ul>
         <li><a href="#">Epic list</a></li>
