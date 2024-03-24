@@ -1,3 +1,22 @@
+<?php
+require("api/config.php");
+
+// Check login
+session_start();
+if (!isset($_SESSION["username"])) {
+    $message = "You must be logged in to view messages projects";
+    header("Location: error.php?err=".$message);
+    die();
+}
+
+// Fetch all messages where the current user is a recipient
+$conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
+$stmt = $conn->prepare("SELECT Text, MSID, SenderUsername FROM Message_Sends WHERE ReceiverUsername=?");
+$stmt->bind_param("s", $_SESSION["username"]);
+$stmt->execute();
+$results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,47 +48,37 @@
             width: 80%;
         }
     </style>
+    <script>
+        function deleteMessage(msid) {
+            location.href = "api/delete_message.php?msid=" + msid;
+        }
+
+        function showMessage(msid) {
+            document.getElementById("viewerFrame").src = "message_viewer.php?msid=" + msid;
+        }
+    </script>
 </head>
 <body>
 <h1>INBOX</h1>
-<form action="#">
-    <input type="submit" value="Compose a message">
-    <br>
-    <table>
-        <tr>
-            <td class="subject"><a href="">Message 1</a></td>
-            <td><input type="submit" value="Delete"></td>
-            <td>From: Jake</td>
-        </tr>
-        <tr>
-            <td class="subject"><a href="">I enjoyed following your guide!</a></td>
-            <td><input type="submit" value="Delete"></td>
-            <td>From: hi</td>
-        </tr>
-        <tr>
-            <td class="subject"><a href="">PLEASE FIX I CANNOT UNDERSTA...</a></td>
-            <td><input type="submit" value="Delete"></td>
-            <td>From: Zach</td>
-        </tr>
-        <tr>
-            <td class="subject"><a href="">SHARE OR YOUR ARE CURSED...</a></td>
-            <td><input type="submit" value="Delete"></td>
-            <td>From: hi</td>
-        </tr>
-        <tr>
-            <td class="subject"><a href="">I enjoyed following your project!</a></td>
-            <td><input type="submit" value="Delete"></td>
-            <td>From: BOB</td>
-        </tr>
-        <tr>
-            <td class="subject"><a href="">I enjoyed following you home!</a></td>
-            <td><input type="submit" value="Delete"></td>
-            <td>From: creep</td>
-        </tr>
-    </table>
+<h3><?= $_SESSION["username"] ?></h3>
+<input type="submit" value="Compose a message" onclick="location.href = 'compose_message.php'">
+<br>
+<table>
+    <tbody>
+    <?php
+    foreach ($results as $message) {
+        echo('<tr><td class="subject">');
+        echo('<a href="#" onclick="showMessage('.$message["MSID"].')">');
+        echo(mb_strimwidth($message["Text"], 0, 25, '...'));
+        echo("</a></td><td>");
+        echo('<input type="submit" value="Delete" onclick="deleteMessage('.$message["MSID"].')">');
+        echo("</td><td>From: ".$message["SenderUsername"]."</td></tr>");
+    }
+    ?>
+    </tbody>
+</table>
 
-    <iframe src="message_viewer.php">
-    </iframe>
-</form>
+<iframe src="about:blank" id="viewerFrame">
+</iframe>
 </body>
 </html>

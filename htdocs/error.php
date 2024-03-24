@@ -23,10 +23,12 @@
             echo(htmlentities($_GET["err"]));
             echo("<br><br>");
         }
+        header("HTTP/1.1 401 Unauthorized");
         ?>
     </strong>
 </em>
 <span>Already have an account?</span>
+<br>
 <br>
 <a href="login.php">LOG IN</a>
 <br>
@@ -34,6 +36,6 @@
 <span>Do you need to register an account?</span>
 <br>
 <br>
-<a href="register.php">Register</a>
+<a href="register.php">REGISTER</a>
 </body>
 </html>
