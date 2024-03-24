@@ -39,4 +39,4 @@ if ($result == 0) {
 // Success! Create session, redirect to profile
 session_start();
 $_SESSION["username"] = $username;
-header("Location: ../profile.php?u=".urlencode($username));
+header("Location: ../index.php");

@@ -93,11 +93,15 @@ if (isset($_SESSION["username"])) {
 <h1><?= $result["Name"] ?></h1>
 <a href="profile.php?u=<?= urlencode($result["Username"]) ?>" id="nameTag"><?= $_SESSION["username"] ?></a>
 
-<button id="deleteButton">
-    <h3>
-        DELETE
-    </h3>
-</button>
+<?php
+    // Optionally displaying the button to delete the wishlist if current user is the creator
+    if ($logged_in_as_creator) {
+        echo('<form action="api/delete_wishlist.php" method="post">');
+        echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');
+        echo('<input id="deleteButton" type="submit" value="DELETE">');
+        echo('</form>');
+    }
+?>
 
 <h3>Projects:</h3>
 <div>
