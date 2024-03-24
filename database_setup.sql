@@ -3,7 +3,6 @@
 -- USE creatables
 
 -- Drop existing tables
-DROP TABLE IF EXISTS CompletesProject;
 DROP TABLE IF EXISTS Contains;
 DROP TABLE IF EXISTS Equipment_NeedsTools;
 DROP TABLE IF EXISTS PurchaseLink_Name;
@@ -105,16 +104,6 @@ CREATE TABLE Contains (
     PID INTEGER,
     PRIMARY KEY (WLID, PID),
     FOREIGN KEY (WLID) REFERENCES ProjectWishlist_Creates(WLID)
-        ON DELETE CASCADE,
-    FOREIGN KEY (PID) REFERENCES Projects_PostsProject(PID)
-        ON DELETE CASCADE
-);
-CREATE TABLE CompletesProject (
-    Username VARCHAR(40),
-    PID INTEGER,
-    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (Username, PID),
-    FOREIGN KEY (Username) REFERENCES Users(Username)
         ON DELETE CASCADE,
     FOREIGN KEY (PID) REFERENCES Projects_PostsProject(PID)
         ON DELETE CASCADE
@@ -246,14 +235,3 @@ INSERT INTO Contains (WLID, PID)
 VALUES(4, 3);
 INSERT INTO Contains (WLID, PID)
 VALUES(4, 4);
-
-INSERT INTO CompletesProject (Username, PID)
-VALUES ('Bob Jones', 1);
-INSERT INTO CompletesProject (Username, PID)
-VALUES ('John Fubar', 2);
-INSERT INTO CompletesProject (Username, PID)
-VALUES ('Jacob Zhu', 3);
-INSERT INTO CompletesProject (Username, PID)
-VALUES ('Sally Jones', 4);
-INSERT INTO CompletesProject (Username, PID)
-VALUES ('Michael Morbius', 5);
