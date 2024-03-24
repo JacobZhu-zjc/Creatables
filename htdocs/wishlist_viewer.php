@@ -37,19 +37,22 @@
         #pList {
             border: 1px solid black;
         }
+        #inputBox {
+            min-width: 93.33%;
+        }
         .bottomDiv {
             display:inline-block;
             border: 1px solid black;
             margin-top: 1%;
             margin-left: 30;
         }
-        #inputBox {
-            min-width: 93.33%;
+        .error {
+            color: "red";
         }
     </style>
 </head>
 <body>
-<em>
+<em id="error">
     <strong>
         <?php
         if (isset($_GET["err"]) && strlen($_GET["err"])) {
