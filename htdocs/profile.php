@@ -52,12 +52,5 @@ $time = date_create("now", new DateTimeZone($prefix.$utc_offset));
         <li><a href="#">Expensive projects</a></li>
     </ul>
 </div>
-<br>
-<h2>Finished projects</h2>
-<div>
-    <ul>
-        <li><a href="#">How to grow big beans</a></li>
-    </ul>
-</div>
 </body>
 </html>

@@ -20,7 +20,7 @@
     <strong>
         <?php
         if (isset($_GET["err"]) && strlen($_GET["err"])) {
-            echo(htmlentities($_GET["err"]));
+            echo(htmlspecialchars($_GET["err"]));
             echo("<br><br>");
         }
         ?>

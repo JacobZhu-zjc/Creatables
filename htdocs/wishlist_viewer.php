@@ -5,7 +5,7 @@ require("api/config.php");
 if (isset($_GET["err"]) && strlen($_GET["err"])) {
     echo('<em id="error">');
     echo('<strong>');
-    echo(htmlentities($_GET["err"]));
+    echo(htmlspecialchars($_GET["err"]));
     echo("<br><br>");
     echo('</strong>');
     echo('</em>');    
