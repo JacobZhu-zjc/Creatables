@@ -67,7 +67,7 @@ if (isset($_POST["imageName"]) && isset($_POST["imageData"])
 }
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
 if ($conn->connect_error) {
-    die("To do 3"); // Don't tell the user too much...
+    redirect_with_error("Error connecting to database"); // Don't tell the user too much...
 }
 
 $stmt = $conn->prepare("INSERT INTO Projects_PostsProject (Name, InstructionText, Username) VALUES (?,?,?)");

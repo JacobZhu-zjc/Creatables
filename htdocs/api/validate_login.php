@@ -28,11 +28,11 @@ $stmt->bind_param("ss", $username, $password);
 $stmt->execute();
 
 // Get results
-$result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$result = $stmt->get_result()->num_rows;
 // Close connection
 $conn->close();
 
-if (count($result) == 0) {
+if ($result == 0) {
     // Empty results, password doesn't match
     redirect_with_error("Incorrect password for user ".$username);
 }

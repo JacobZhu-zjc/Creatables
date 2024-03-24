@@ -1,6 +1,6 @@
 <?php
-
 require("api/config.php");
+
 $utc_offset = -8;
 $prefix = $utc_offset >= 0 ? "+" : "";
 $time = date_create("now", new DateTimeZone($prefix.$utc_offset));

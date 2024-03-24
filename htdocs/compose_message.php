@@ -22,14 +22,10 @@
 </head>
 <body>
 <h1>COMPOSE MESSAGE</h1>
-<form action="#">
+<form action="api/post_message.php" method="post">
     <label for="recipient">Recipent:</label>
     <br>
-    <input type="text" name="recipient" id="recipient" placeholder="Username">
-    <br>
-    <label for="subject">Subject:</label>
-    <br>
-    <input type="text" name="subject" id="subject" placeholder="Pick an interesting title">
+    <input type="text" name="recipient" id="recipient" placeholder="Username" maxlength="40">
     <br>
     <label for="message">Message:</label>
     <br>

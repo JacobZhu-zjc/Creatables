@@ -71,8 +71,7 @@ $stmt->bind_param("s", $username);
 $stmt->execute();
 
 // Get results
-$result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-if (count($result) != 0) {
+if ($stmt->get_result()->num_rows != 0) {
     // Username is taken
     $conn->close();
     redirect_with_error("Username is already in use: ".$username);

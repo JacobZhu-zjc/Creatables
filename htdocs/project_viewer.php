@@ -9,6 +9,10 @@ if (!isset($_GET["id"]) || strlen($_GET["id"]) == 0) {
 $pid = $_GET["id"];
 
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
+if ($conn->error) {
+    echo("<h1>Error connecting to database</h1>");
+    die();
+}
 $stmt = $conn->prepare("SELECT * FROM Projects_PostsProject WHERE PID=?");
 $stmt->bind_param("i", $pid);
 $stmt->execute();
