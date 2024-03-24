@@ -1,50 +1,88 @@
+<?php
+// Establishing PHP variables that are used elsewhere in the HTML page
+require("api/config.php");
+
+if (isset($_GET["err"]) && strlen($_GET["err"])) {
+    echo('<em id="error">');
+    echo('<strong>');
+    echo(htmlentities($_GET["err"]));
+    echo("<br><br>");
+    echo('</strong>');
+    echo('</em>');    
+    return;
+}
+
+// Finding the appropriate wishlist from the database and pulling the required info
+if ((!isset($_GET["id"]) || strlen($_GET["id"]) == 0)) {
+    echo("<h1>Please specify a wishlist</h1>");
+    die();
+}
+$wlid = $_GET["id"];
+
+$conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
+$stmt = $conn->prepare("SELECT * FROM ProjectWishlist_Creates WHERE WLID=?");
+$stmt->bind_param("i", $wlid);
+$stmt->execute();
+$results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+if (count($results) != 1) {
+    $conn->close();
+    echo("<h1>Wishlist not found</h1>");
+    die();
+}
+
+// We will use this to generate HTML
+$result = $results[0];
+
+// Get wishlist projects
+$stmt = $conn->prepare("SELECT * FROM Projects_PostsProject WHERE PID IN (SELECT PID FROM Contains WHERE WLID=?)");
+$stmt->bind_param("i", $wlid);
+$stmt->execute();
+$projects = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+$conn->close();
+
+$logged_in_as_creator = false;
+session_start();
+if (isset($_SESSION["username"])) {
+    $logged_in_as_creator = $_SESSION["username"] == $result["Username"];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>MyAwesomeWishlist</title>
+    <title><?= $result["Name"] ?></title>
     <style>
         body {
-            text-align: center;
+            margin-left: 5%;
+            margin-right: 5%;
         }
-        table {
-            border: 10px solid black;
-            border-collapse: collapse;
-            margin-top: 20px;
+        div {
+            border: 1px solid black;
         }
-        td {
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
+        ul {
             border-collapse: collapse;
+            margin: 20px;
+        }
+        li {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        form {
+            margin-top: 10px;
+            float: right;
         }
         #nameTag {
-            margin: 30;
-            position: relative;
-            right: 20%;
             font-size: 30px;
+            margin: 5px;
         }
         #deleteButton {
-            align-content: right;
-            margin: 0;
-            position: relative;
-            left: 20%
-        }
-        #projects {
-           text-align: left;
-        }
-        #list {
-            text-align: left;
-        }
-        #pList {
-            border: 1px solid black;
-        }
-        #inputBox {
-            min-width: 93.33%;
-        }
-        .bottomDiv {
-            display:inline-block;
-            border: 1px solid black;
-            margin-top: 1%;
-            margin-left: 30;
+            color: red;
+            border: 1px solid red;
+            float: right;
+            min-width: 75px;
+            min-height: 33px;
+            margin: 5px;
+            color: "red";
         }
         .error {
             color: "red";
@@ -52,49 +90,43 @@
     </style>
 </head>
 <body>
-<em id="error">
-    <strong>
-        <?php
-        if (isset($_GET["err"]) && strlen($_GET["err"])) {
-            echo(htmlentities($_GET["err"]));
-            echo("<br><br>");
-        }
-        ?>
-    </strong>
-</em>
-<h1>My Awesome Wishlist</h1>
-<a href="" id="nameTag">JSKONS</a>
+<h1><?= $result["Name"] ?></h1>
+<a href="profile.php?u=<?= urlencode($result["Username"]) ?>" id="nameTag"><?= $_SESSION["username"] ?></a>
 
-<button id="deleteButton" >
-    <h3 style = "color:red">
+<button id="deleteButton">
+    <h3>
         DELETE
     </h3>
 </button>
 
-<h3 id = projects> Projects:</h3>
-<div class = table id = pList>
-<ul  id = list>
-    <li>Cool Project</li>
-    <li>My Second Project</li>
-    <li>How to make a 304 project</li>
-    <li>Foo bar baz biff zip zow character li...</li>
-</ul>
+<h3>Projects:</h3>
+<div>
+    <?php
+        if (count($projects) == 0) {
+            echo("<br>");
+            echo("&ensp;No projects added yet...<br><br>");
+        } else {
+            echo("<ul>");
+            foreach ($projects as $project) {
+                echo("<li>");
+                echo($project["Name"]);
+                echo("</li>");
+            }
+            echo("</ul>");
+        }
+    ?>
 </div>
 
-<div class = bottomDiv id = inputBox>
-    <form action="#">
-        <input type="text">
-    </form>
-    
-</div>
-
-<div class = bottomDiv> 
-    <button id = addButton>
-        <text>
-            Add
-        </text>
-    </button>
-</div>
-
+<?php
+    // Optionally displaying the button to add new projects if the current user is the creator
+    if ($logged_in_as_creator) {
+        echo('<form action="api/update_wishlist.php" method="post">');
+        echo('<input type="text" placeholder="Project ID" name="projectID">');
+        echo('<input type="submit" value="ADD PROJECT">');
+        echo('</form>');
+        // FIXME:
+        $_POST["WLID"] = $wlid;
+    }
+?>
 </body>
 </html>

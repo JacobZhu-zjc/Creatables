@@ -16,7 +16,7 @@ function redirect_with_error($message) {
 session_start();
 
 if (!isset($_SESSION["username"])) {
-    redirect_to_error_page("You must be logged in to view wishlists");
+    redirect_to_error_page("You must be logged in to create wishlists");
 }
 $username = $_SESSION["username"];
 

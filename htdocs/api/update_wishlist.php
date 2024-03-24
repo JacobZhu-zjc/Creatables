@@ -16,25 +16,31 @@ function redirect_with_error($message) {
 session_start();
 
 if (!isset($_SESSION["username"])) {
-    redirect_to_error_page("You must be logged in to view wishlists");
+    redirect_to_error_page("You must be logged in to edit wishlists");
 }
 $username = $_SESSION["username"];
 
-if (!isset($_POST["title"]) || strlen($_POST["title"]) == 0) {
-    redirect_with_error("You must enter a title for your wishlist");
+if (!isset($_POST["projectID"]) || !filter_var($_POST["projectID"], FILTER_VALIDATE_INT) || $_POST["projectID"] < 1) {
+    redirect_with_error("You must enter an appropriate project ID to add to your wishlist");
 }
-$title = htmlspecialchars($_POST["title"]);
+$projectID = $_POST["projectID"];
 
-// Inserting wishlist into database
+if (!isset($_POST["WLID"]) || !filter_var($_POST["WLID"], FILTER_VALIDATE_INT) || $_POST["WLID"] < 1) {
+    // redirect_with_error("Error: wishlist ID invalid");
+    var_dump(!filter_var($_POST["WLID"], FILTER_VALIDATE_INT));
+    var_dump($_POST["WLID"] < 1);
+}
+$wlid = $_POST["WLID"];
+
+// Inserting tuple into database
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
 if ($conn->connect_error) {
     die("Unable to connect to database"); // Don't tell the user too much...
 }
 
-$stmt = $conn->prepare("INSERT INTO ProjectWishlist_Creates (Name, Username) VALUES (?,?)");
-$stmt->bind_param("ss", $title, $username);
+$stmt = $conn->prepare("INSERT INTO Contains (WLID, PID) VALUES (?,?)");
+$stmt->bind_param("ii", $wlid, $projectID);
 $stmt->execute();
-$wlid = $conn->insert_id;
 $conn->close();
 
 // Redirecting to wishlist viewer page
