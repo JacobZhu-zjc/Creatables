@@ -209,7 +209,7 @@ if (count($images) > 0) {
         <option value="stars">Star rating</option>
         <option value="image">Upload image</option>
     </select>
-    <form action="">
+    <form action="api/project_viewer.php" method="post">
         <input type="text" placeholder="Add a title!" id="title_input">
         <br>
         <textarea name="comment" placeholder="Say something nice..." id="comment_input"></textarea>
