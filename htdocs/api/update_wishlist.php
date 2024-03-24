@@ -26,7 +26,7 @@ if (!isset($_POST["projectID"]) || !filter_var($_POST["projectID"], FILTER_VALID
 $projectID = $_POST["projectID"];
 
 if (!isset($_POST["wishlistID"]) || !filter_var($_POST["wishlistID"], FILTER_VALIDATE_INT) || $_POST["wishlistID"] < 1) {
-    redirect_with_error("Error: wishlist ID invalid");
+    redirect_with_error("Internal error: wishlist ID invalid");
 }
 $wishlistID = $_POST["wishlistID"];
 
