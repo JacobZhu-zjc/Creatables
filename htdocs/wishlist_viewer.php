@@ -49,23 +49,33 @@
     </style>
 </head>
 <body>
-    <h1>My Awesome Wishlist</h1>
-    <a href="" id="nameTag">JSKONS</a>
+<em>
+    <strong>
+        <?php
+        if (isset($_GET["err"]) && strlen($_GET["err"])) {
+            echo(htmlentities($_GET["err"]));
+            echo("<br><br>");
+        }
+        ?>
+    </strong>
+</em>
+<h1>My Awesome Wishlist</h1>
+<a href="" id="nameTag">JSKONS</a>
 
-    <button id="deleteButton" >
-        <h3 style = "color:red">
-            DELETE
-        </h3>
-    </button>
-    <h3 id = projects> Projects:</h3>
-    <div class = table id = pList>
+<button id="deleteButton" >
+    <h3 style = "color:red">
+        DELETE
+    </h3>
+</button>
 
-    <ul  id = list>
-        <li>Cool Project</li>
-        <li>My Second Project</li>
-        <li>How to make a 304 project</li>
-        <li>Foo bar baz biff zip zow character li...</li>
-    </ul>
+<h3 id = projects> Projects:</h3>
+<div class = table id = pList>
+<ul  id = list>
+    <li>Cool Project</li>
+    <li>My Second Project</li>
+    <li>How to make a 304 project</li>
+    <li>Foo bar baz biff zip zow character li...</li>
+</ul>
 </div>
 
 <div class = bottomDiv id = inputBox>
