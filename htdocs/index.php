@@ -11,6 +11,9 @@ $projects = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
 $query = "SELECT COUNT(*) FROM Projects_PostsProject";
 $count = $conn->query($query)->fetch_all()[0][0];
 $conn->close();
+
+session_start();
+$logged_in = isset($_SESSION["username"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +41,16 @@ $conn->close();
 </head>
 <body>
     <h1>CREATABLES</h1>
-    <a href="login.php">LOG IN</a>
+    <?php
+    if (!$logged_in) {
+        echo("<h3>Not logged in.</h3>");
+        echo('<a href="login.php">LOG IN</a>');
+    } else {
+        echo('<h3>Logged in as <a href="profile.php?u="'.urlencode($_SESSION["username"]).'>'.$_SESSION["username"]
+            .'</a></h3>');
+        echo('<a href="api/logout.php">LOG OUT</a>');
+    }
+    ?>
     <h3>Recent projects:</h3>
     <table class="center">
         <tbody>
