@@ -112,9 +112,10 @@ if (isset($_SESSION["username"])) {
         } else {
             echo("<ul>");
             foreach ($projects as $project) {
-                echo("<li>");
+                // TODO: add individual delete buttons for each project
+                echo('<li><a href="project_viewer.php?id='.$project["PID"].'">');
                 echo($project["Name"]);
-                echo("</li>");
+                echo('</a></li>');
             }
             echo("</ul>");
         }

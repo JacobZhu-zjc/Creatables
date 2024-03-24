@@ -30,12 +30,21 @@ if (!isset($_POST["wishlistID"]) || !filter_var($_POST["wishlistID"], FILTER_VAL
 }
 $wishlistID = $_POST["wishlistID"];
 
-// Inserting tuple into database
+// Checking if the specified project ID exists
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
 if ($conn->connect_error) {
     die("Unable to connect to database"); // Don't tell the user too much...
 }
 
+$stmt = $conn->prepare("SELECT * FROM Projects_PostsProject WHERE PID=?");
+$stmt->bind_param("i", $projectID);
+$stmt->execute();
+if ($stmt->get_result()->num_rows == 0) {
+    $conn->close();
+    return redirect_with_error("Specified project does not exist");
+}
+
+// If project does exist, inserts tuple into database
 $stmt = $conn->prepare("INSERT INTO Contains (WLID, PID) VALUES (?,?)");
 $stmt->bind_param("ii", $wishlistID, $projectID);
 $stmt->execute();
