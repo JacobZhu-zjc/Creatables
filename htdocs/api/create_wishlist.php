@@ -38,5 +38,5 @@ $wlid = $conn->insert_id;
 $conn->close();
 
 // Redirecting to wishlist viewer page
-header("Location: ../wishlist_viewer.php?id=".$wlid);
+header("Location: ../wishlist_viewer.php?id=".urlencode($wlid));
 ?>

@@ -25,4 +25,4 @@ $stmt->bind_param("si", $username, $wishlistID);
 $stmt->execute();
 $conn->close();
 
-header("Location: ../profile.php?u=".$username);
+header("Location: ../profile.php?u=".urlencode($username));

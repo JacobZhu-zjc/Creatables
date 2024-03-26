@@ -109,16 +109,17 @@ if (isset($_SESSION["username"])) {
         if (count($projects) == 0) {
             echo("<br>");
             echo("&ensp;No projects added yet...<br><br>");
-        } else {
-            echo("<ul>");
-            foreach ($projects as $project) {
-                // TODO: add individual delete buttons for each project
-                echo('<li><a href="project_viewer.php?id='.$project["PID"].'">');
-                echo($project["Name"]);
-                echo('</a></li>');
-            }
-            echo("</ul>");
+            return;
         }
+        
+        echo("<ul>");
+        foreach ($projects as $project) {
+            // TODO: add individual delete buttons for each project
+            echo('<li><a href="project_viewer.php?id='.urlencode($project["PID"]).'">');
+            echo($project["Name"]);
+            echo('</a></li>');
+        }
+        echo("</ul>");
     ?>
 </div>
 

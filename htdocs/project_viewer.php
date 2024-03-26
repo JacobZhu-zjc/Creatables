@@ -42,10 +42,16 @@ $tools = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 // Get materials
 $stmt = $conn->prepare("SELECT a.Name, Quantity, QuantityUnit ".
     "FROM Materials_MadeWith a, Projects_PostsProject b ".
-    "WHERE a.PID = b.PID AND b.PID = ?");
+    "WHERE a.PID = b.PID AND b.PID=?");
 $stmt->bind_param("i", $pid);
 $stmt->execute();
 $materials = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Get feedback
+$stmt = $conn->prepare("SELECT * FROM Feedback_LeavesFeedback WHERE PID=?");
+$stmt->bind_param("i", $pid);
+$stmt->execute();
+$feedback = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 $conn->close();
 
@@ -181,7 +187,31 @@ if (count($images) > 0) {
 <div>
     <h3>Reviews:</h3>
     <div id="review_content">
-        <ul>
+        <?php
+        if (count($feedback) == 0) {
+            echo("<br>");
+            echo("&ensp;No projects added yet...<br><br>");
+            return;
+        }
+
+        echo("<ul>");
+        // No error handling for invalid reviews, where all three of Stars, Comment, and ImageData are NULL
+        foreach ($feedback as $review) {
+            echo("<li>".$review["Title"]);
+            if (!is_null($review["Stars"])) {
+                echo($review["Stars"].'/5');
+            } else if (!is_null($review["Comment"])) {
+                echo($review["Comment"]);
+            } else {
+                echo(get_image_tag_from_blob($image["ImageData"]));
+                echo("<br>");
+                echo("<p>" . $image["Caption"] . "</p>");
+            }
+            echo('<br><a href="profile.php?u='.urlencode($review["Username"]).'">'.$review["Username"].'</a></li>');
+        }
+        echo("</ul>");
+        ?>
+        <!-- <ul>
             <li>
                 Loved these instructions! Had massive beans in no time!
                 <br>
@@ -197,7 +227,7 @@ if (count($images) > 0) {
                 <br>
                 <a href="">MelonMan</a>
             </li>
-        </ul>
+        </ul> -->
     </div>
 </div>
 <div>

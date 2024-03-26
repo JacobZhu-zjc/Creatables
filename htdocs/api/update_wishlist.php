@@ -51,5 +51,5 @@ $stmt->execute();
 $conn->close();
 
 // Redirecting to wishlist viewer page
-header("Location: ../wishlist_viewer.php?id=".$wishlistID);
+header("Location: ../wishlist_viewer.php?id=".urlencode($wishlistID));
 ?>
