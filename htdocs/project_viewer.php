@@ -205,35 +205,18 @@ if (count($images) > 0) {
         foreach ($feedback as $review) {
             echo("<li>".$review["Title"]);
             if (!is_null($review["Stars"])) {
-                echo($review["Stars"].'/5');
+                echo($review["Stars"].'/5<br>');
             } else if (!is_null($review["Comment"])) {
-                echo($review["Comment"]);
+                echo($review["Comment"].'<br>');
             } else {
                 echo(get_image_tag_from_blob($image["ImageData"]));
                 echo("<br>");
                 echo("<p>" . $image["Caption"] . "</p>");
             }
-            echo('<br><a href="profile.php?u='.urlencode($review["Username"]).'">'.$review["Username"].'</a></li>');
+            echo('<a href="profile.php?u='.urlencode($review["Username"]).'">'.$review["Username"].'</a></li>');
         }
         echo("</ul>");
         ?>
-        <!-- <ul>
-            <li>
-                Loved these instructions! Had massive beans in no time!
-                <br>
-                <a href="">BOBTHEGROWER</a>
-            </li>
-            <li>
-                3/5
-                <br>
-                <a href="">Jack</a>
-            </li>
-            <li>
-                <img src="" alt="Some caption here!">
-                <br>
-                <a href="">MelonMan</a>
-            </li>
-        </ul> -->
     </div>
 </div>
 <div>
