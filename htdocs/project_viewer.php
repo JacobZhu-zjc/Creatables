@@ -215,23 +215,23 @@ if (count($images) > 0) {
     </select>
 
 
-    <form action="api/project_viewer.php" method="post" id ="text" style = "display: block;">
-        <input type="text" placeholder="Add a title!" id="title_input">
+    <form action="api/post_feedback.php" method="post" id ="text" style = "display: block;">
+        <input type="text" placeholder="Add a title!" id="title_input" name = "title">
         <br>
         <textarea name="comment" placeholder="Say something nice..." id="comment_input"></textarea>
         <br>
         <input type="submit" value="POST" class = "postButton">
     </form>
 
-    <form action="api/project_viewer.php" method="post" id ="image" style = "display: block;">
-        <input type="text" placeholder="Add a title!" id="title_input">
+    <form action="api/post_feedback.php" method="post" id ="image" style = "display: block;">
+        <input type="text" placeholder="Add a title!" id="title_input" name = "title">
         <br>
-        <input type="file" id="image" accept="image/*">
+        <input type="file" id="image" accept="image/*" name = "png">
         <br>
         <input type="submit" value="POST" class = "postButton">
     </form>
 
-    <form action="api/project_viewer.php" method="post" id ="stars" style = "display: block;">
+    <form action="api/post_feedback.php" method="post" id ="stars" style = "display: block;">
         <input type="text" placeholder="Add a title!" id="title_input">
         <br>
         <select name="Rating" id="user_rating">

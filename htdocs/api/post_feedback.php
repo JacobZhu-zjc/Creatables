@@ -10,9 +10,18 @@ function redirect_with_error($message) {
 }
 
 session_start();
+//rating, title, png, comment
 
 if (!isset($_POST["Comment"]) || strlen($_POST["Comment"]) == 0) {
     redirect_with_error("You must enter valid Comment");
+}
+
+if (!isset($_POST["instructions"]) || strlen($_POST["instructions"]) == 0) {
+    redirect_with_error("You must enter valid instructions");
+}
+
+if (!isset($_POST["instructions"]) || strlen($_POST["instructions"]) == 0) {
+    redirect_with_error("You must enter valid instructions");
 }
 
 $comment = $_SESSION["Comment"];
@@ -21,7 +30,7 @@ $title = $_SESSION["Title"];
 
 $pid = $_GET["id"]; //How to specify from which table?
 
-$username = $_SESSION["username"]
+$username = $_SESSION["username"];
 
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
 if ($conn->connect_error) {
@@ -33,5 +42,4 @@ $stmt = $conn->prepare("INSERT INTO Feedback_LeavesFeedback (Title, Comment, Use
 $stmt->bind_param("sssi", $title, $comment, $username, $pid);
 $stmt->execute();
 
-
->
+?>
