@@ -125,41 +125,39 @@ if (isset($_SESSION["username"])) {
 <body>
 <h1><?= $result["Name"] ?></h1>
 <h2>By <a href="profile.php?u=<?= urlencode($result["Username"]) ?>"><?= $result["Username"] ?></a></h2>
-<?= $result["Timestamp"] ?>
 <?php
+echo($result["Timestamp"]);
 if ($logged_in_as_creator) {
     echo('<form action="api/delete_project.php" method="post">');
     echo('<input type="submit" value="DELETE" id="delete_button">');
     echo('<input type="text" value="' . $pid . '" name="id" style="display:none">');
     echo("</form>");
 }
-?>
-<input type="submit" value="I MADE THIS!" id="complete_button">
-<?php
-    if (count($tools) > 0) {
-        echo('<div class="top-margin">');
-        echo("<h3>Equipment:</h3>");
-        echo("<ul>");
-        foreach ($tools as $tool) {
-            echo("<li>");
-            echo('<a href="'.$tool["PurchaseLink"].'" target="_blank">'.$tool["Name"]."</a>");
-            echo("</li>");
-        }
-        echo("</ul>");
-        echo("</div>");
+
+if (count($tools) > 0) {
+    echo('<div class="top-margin">');
+    echo("<h3>Equipment:</h3>");
+    echo("<ul>");
+    foreach ($tools as $tool) {
+        echo("<li>");
+        echo('<a href="'.$tool["PurchaseLink"].'" target="_blank">'.$tool["Name"]."</a>");
+        echo("</li>");
     }
-    if (count($materials) > 0) {
-        echo('<div class="top-margin">');
-        echo("<h3>Materials:</h3>");
-        echo("<ul>");
-        foreach ($materials as $material) {
-            echo("<li>");
-            echo($material["Name"]." (".$material["Quantity"]." ".$material["QuantityUnit"].")");
-            echo("</li>");
-        }
-        echo("</ul>");
-        echo("</div>");
+    echo("</ul>");
+    echo("</div>");
+}
+if (count($materials) > 0) {
+    echo('<div class="top-margin">');
+    echo("<h3>Materials:</h3>");
+    echo("<ul>");
+    foreach ($materials as $material) {
+        echo("<li>");
+        echo($material["Name"]." (".$material["Quantity"]." ".$material["QuantityUnit"].")");
+        echo("</li>");
     }
+    echo("</ul>");
+    echo("</div>");
+}
 ?>
 <div class="top-margin">
     <h3>Instructions:</h3>
