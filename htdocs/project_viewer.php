@@ -203,7 +203,7 @@ if (count($images) > 0) {
         echo("<ul>");
         // No error handling for invalid reviews, where all three of Stars, Comment, and ImageData are NULL
         foreach ($feedback as $review) {
-            echo("<li>".$review["Title"]);
+            echo("<li>".$review["Title"]."<br>");
             if (!is_null($review["Stars"])) {
                 echo($review["Stars"].'/5');
             } else if (!is_null($review["Comment"])) {
