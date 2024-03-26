@@ -210,10 +210,18 @@ if (count($images) > 0) {
     <form action="api/project_viewer.php" method="post">
         <input type="text" placeholder="Add a title!" id="title_input">
         <br>
+        <div id="comment_poster">
         <textarea name="comment" placeholder="Say something nice..." id="comment_input"></textarea>
+        </div>
         <br>
         <input type="submit" value="POST">
     </form>
 </div>
+
+<script>
+    document.getElementById("comment_type").onchange = (commentType) => {
+        console.log(commentType);
+    };
+</script>
 </body>
 </html>
