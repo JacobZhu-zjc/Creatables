@@ -46,7 +46,7 @@ $logged_in = isset($_SESSION["username"]);
         echo("<h3>Not logged in.</h3>");
         echo('<a href="login.php">LOG IN</a>');
     } else {
-        echo('<h3>Logged in as <a href="profile.php?u="'.urlencode($_SESSION["username"]).'>'.$_SESSION["username"]
+        echo('<h3>Logged in as <a href="profile.php?u='.urlencode($_SESSION["username"]).'">'.$_SESSION["username"]
             .'</a></h3>');
         echo('<a href="api/logout.php">LOG OUT</a>');
     }
@@ -59,8 +59,8 @@ $logged_in = isset($_SESSION["username"]);
             echo("<tr>");
             echo('<td><a href="project_viewer.php?id='.$project["PID"].'">');
             echo($project["Name"]."</a></td>");
-            echo("<td><br>".$project["Username"]);
-            echo("</td></tr>");
+            echo('<td><br><a href="profile.php?u='.urlencode($project["Username"]).'">'.$project["Username"]);
+            echo("</a></td></tr>");
         }
         ?>
         </tbody>
