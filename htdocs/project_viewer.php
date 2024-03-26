@@ -88,6 +88,10 @@ if (isset($_SESSION["username"])) {
             margin-bottom: 10px;
         }
 
+        .postButton { 
+            margin-top: 23px;    
+        }
+
         #delete_button {
             color: red;
             border: 1px solid red;
@@ -126,6 +130,8 @@ if (isset($_SESSION["username"])) {
             min-height: 150px;
             margin-bottom: 10px;
         }
+
+
     </style>
 </head>
 <body>
@@ -237,13 +243,64 @@ if (count($images) > 0) {
         <option value="stars">Star rating</option>
         <option value="image">Upload image</option>
     </select>
-    <form action="api/project_viewer.php" method="post">
-        <input type="text" placeholder="Add a title!" id="title_input">
+
+
+    <form action="api/post_feedback.php" method="post" id ="text" style = "display: block;">
+        <input type="text" placeholder="Add a title!" id="title_input" name = "title">
         <br>
         <textarea name="comment" placeholder="Say something nice..." id="comment_input"></textarea>
         <br>
-        <input type="submit" value="POST">
+        <input type="submit" value="POST" class = "postButton">
     </form>
+
+    <form action="api/post_feedback.php" method="post" id ="image" style = "display: block;">
+        <input type="text" placeholder="Add a title!" id="title_input" name = "title">
+        <br>
+        <input type="file" id="image" accept="image/*" name = "png">
+        <br>
+        <input type="submit" value="POST" class = "postButton">
+    </form>
+
+    <form action="api/post_feedback.php" method="post" id ="stars" style = "display: block;">
+        <input type="text" placeholder="Add a title!" id="title_input">
+        <br>
+        <select name="Rating" id="user_rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        </select>
+        <br>
+        <input type="submit" value="POST" class = "postButton">
+    </form>
+
+    <script>
+        var stars = document.getElementById("stars");
+        var image = document.getElementById("image");
+        var text = document.getElementById("text");
+        var choices = document.getElementById("comment_type");
+        changeDisplay();
+        function changeDisplay() {
+
+            stars.style.display="none"
+            image.style.display="none"
+            text.style.display="none"
+
+            var choice = choices.value;
+
+            if (choice == "text"){
+                text.style.display = "block";
+            } else if (choice == "stars"){
+                stars.style.display = "block";
+            } else if (choice == "image"){
+                image.style.display = "block";
+            }
+        }
+        choices.onchange = changeDisplay;
+
+    </script>
+
 </div>
 </body>
 </html>
