@@ -32,16 +32,16 @@ $stmt->execute();
 $images = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 // Get equipment
-$stmt = $conn->prepare("SELECT b.Name, a.PurchaseLink ".
-    "FROM Equipment_NeedsTools a, PurchaseLink_Name b, Projects_PostsProject c ".
+$stmt = $conn->prepare("SELECT b.Name, a.PurchaseLink " .
+    "FROM Equipment_NeedsTools a, PurchaseLink_Name b, Projects_PostsProject c " .
     "WHERE a.PID = c.PID AND a.PurchaseLink = b.PurchaseLink AND c.PID=?");
 $stmt->bind_param("i", $pid);
 $stmt->execute();
 $tools = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 // Get materials
-$stmt = $conn->prepare("SELECT a.Name, Quantity, QuantityUnit ".
-    "FROM Materials_MadeWith a, Projects_PostsProject b ".
+$stmt = $conn->prepare("SELECT a.Name, Quantity, QuantityUnit " .
+    "FROM Materials_MadeWith a, Projects_PostsProject b " .
     "WHERE a.PID = b.PID AND b.PID=?");
 $stmt->bind_param("i", $pid);
 $stmt->execute();
@@ -88,8 +88,8 @@ if (isset($_SESSION["username"])) {
             margin-bottom: 10px;
         }
 
-        .postButton { 
-            margin-top: 23px;    
+        .postButton {
+            margin-top: 10px;
         }
 
         #delete_button {
@@ -116,19 +116,18 @@ if (isset($_SESSION["username"])) {
             border: 1px solid black;
         }
 
-        #comment_type {
+        #commentType {
             margin-bottom: 10px;
         }
 
-        #title_input {
+        #titleInput {
             width: 100%;
             margin-bottom: 10px;
         }
 
-        #comment_input {
+        #commentInput {
             width: 100%;
             min-height: 150px;
-            margin-bottom: 10px;
         }
 
 
@@ -152,7 +151,7 @@ if (count($tools) > 0) {
     echo("<ul>");
     foreach ($tools as $tool) {
         echo("<li>");
-        echo('<a href="'.$tool["PurchaseLink"].'" target="_blank">'.$tool["Name"]."</a>");
+        echo('<a href="' . $tool["PurchaseLink"] . '" target="_blank">' . $tool["Name"] . "</a>");
         echo("</li>");
     }
     echo("</ul>");
@@ -164,7 +163,7 @@ if (count($materials) > 0) {
     echo("<ul>");
     foreach ($materials as $material) {
         echo("<li>");
-        echo($material["Name"]." (".$material["Quantity"]." ".$material["QuantityUnit"].")");
+        echo($material["Name"] . " (" . $material["Quantity"] . " " . $material["QuantityUnit"] . ")");
         echo("</li>");
     }
     echo("</ul>");
@@ -193,97 +192,101 @@ if (count($images) > 0) {
 <div>
     <h3>Reviews:</h3>
     <div id="review_content">
-        <?php
-        if (count($feedback) == 0) {
-            echo("<br>");
-            echo("&ensp;No projects added yet...<br><br>");
-            return;
-        }
-
-        echo("<ul>");
-        // No error handling for invalid reviews, where all three of Stars, Comment, and ImageData are NULL
-        foreach ($feedback as $review) {
-            echo("<li>".$review["Title"]."<br>");
-            if (!is_null($review["Stars"])) {
-                echo($review["Stars"].'/5<br>');
-            } else if (!is_null($review["Comment"])) {
-                echo($review["Comment"].'<br>');
+        <ul>
+            <?php
+            if (count($feedback) > 0) {
+                foreach ($feedback as $review) {
+                    echo("<li>" . $review["Title"] . "<br>");
+                    if (!is_null($review["Stars"])) {
+                        echo($review["Stars"] . '/5<br>');
+                    } else if (!is_null($review["Comment"])) {
+                        echo($review["Comment"] . '<br>');
+                    } else {
+                        echo(get_image_tag_from_blob($image["ImageData"]));
+                        echo("<br>");
+                        echo("<p>" . $image["Caption"] . "</p>");
+                    }
+                    echo('<a href="profile.php?u=' . urlencode($review["Username"]) . '">' . $review["Username"] . '</a></li>');
+                }
             } else {
-                echo(get_image_tag_from_blob($image["ImageData"]));
-                echo("<br>");
-                echo("<p>" . $image["Caption"] . "</p>");
+                echo("<li><em>No reviews</em></li>");
             }
-            echo('<a href="profile.php?u='.urlencode($review["Username"]).'">'.$review["Username"].'</a></li>');
-        }
-        echo("</ul>");
-        ?>
+            ?>
+        </ul>
     </div>
 </div>
 <div>
     <h3>Post a review:</h3>
-    <select name="Comment" id="comment_type">
-        <option value="text">Text</option>
-        <option value="stars">Star rating</option>
-        <option value="image">Upload image</option>
-    </select>
-
-
-    <form action="api/post_feedback.php" method="post" id ="text" style = "display: block;">
-        <input type="text" placeholder="Add a title!" id="title_input" name = "title">
-        <br>
-        <textarea name="comment" placeholder="Say something nice..." id="comment_input"></textarea>
-        <br>
-        <input type="submit" value="POST" class = "postButton">
-    </form>
-
-    <form action="api/post_feedback.php" method="post" id ="image" style = "display: block;">
-        <input type="text" placeholder="Add a title!" id="title_input" name = "title">
-        <br>
-        <input type="file" id="image" accept="image/*" name = "png">
-        <br>
-        <input type="submit" value="POST" class = "postButton">
-    </form>
-
-    <form action="api/post_feedback.php" method="post" id ="stars" style = "display: block;">
-        <input type="text" placeholder="Add a title!" id="title_input">
-        <br>
-        <select name="Rating" id="user_rating">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
+    <form action="api/post_feedback.php" method="post" id="ratingForm">
+        <select name="commentType" id="commentType">
+            <option value="text">Text</option>
+            <option value="stars">Star rating</option>
+            <option value="image">Upload image</option>
         </select>
+        <input type="text" placeholder="Add a title!" id="titleInput" name="title">
         <br>
-        <input type="submit" value="POST" class = "postButton">
+        <div id="text">
+            <textarea name="comment" placeholder="Say something nice..." id="commentInput"></textarea>
+        </div>
+        <div id="image">
+            <input type="file" id="imagePicker" accept="image/png" name="png">
+        </div>
+        <div id="stars">
+            <select name="rating" id="userRating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <input type="button" value="POST" class="postButton" onclick="postRating()">
     </form>
-
     <script>
-        var stars = document.getElementById("stars");
-        var image = document.getElementById("image");
-        var text = document.getElementById("text");
-        var choices = document.getElementById("comment_type");
-        changeDisplay();
+        const stars = document.getElementById("stars");
+        const image = document.getElementById("image");
+        const text = document.getElementById("text");
+        const choices = document.getElementById("commentType");
+
         function changeDisplay() {
-
-            stars.style.display="none"
-            image.style.display="none"
-            text.style.display="none"
-
-            var choice = choices.value;
-
-            if (choice == "text"){
-                text.style.display = "block";
-            } else if (choice == "stars"){
-                stars.style.display = "block";
-            } else if (choice == "image"){
-                image.style.display = "block";
+            stars.style.display = "none";
+            image.style.display = "none";
+            text.style.display = "none";
+            switch (choices.value) {
+                case "text":
+                    text.style.display = "block";
+                    break;
+                case "stars":
+                    stars.style.display = "block";
+                    break;
+                case "image":
+                    image.style.display = "block";
             }
         }
+
+        changeDisplay();
         choices.onchange = changeDisplay;
 
+        function postRating() {
+            const form = document.getElementById("ratingForm");
+            const files = document.getElementById("imagePicker").files;
+            if (files.length === 0) {
+                form.submit();
+                return;
+            }
+            let reader = new FileReader();
+            reader.onload = () => {
+                let input = document.createElement("input");
+                input.setAttribute("value", reader.result);
+                input.setAttribute("name", "imageData");
+                input.setAttribute("type", "text");
+                input.setAttribute("style", "display:none");
+                form.appendChild(input);
+                form.submit();
+            };
+            reader.readAsDataURL(files[0]);
+        }
     </script>
-
 </div>
 </body>
 </html>

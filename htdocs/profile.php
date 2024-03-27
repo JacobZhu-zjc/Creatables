@@ -76,9 +76,10 @@ if ($logged_in_as_author) {
 
 <h3><?= $city ?> (Local Time: <?= $time->format("h:i") ?>)</h3>
 <br>
+<h2>Guides</h2>
 <?php
 if ($logged_in_as_author) {
-    echo('<h2>Guides</h2><button class="offsetRight" onclick="location.href=\'post_project.php\'">Create new</button>');
+    echo('<button class="offsetRight" onclick="location.href=\'post_project.php\'">Create new</button>');
 }
 ?>
 <div>

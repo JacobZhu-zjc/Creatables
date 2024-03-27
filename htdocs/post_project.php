@@ -99,10 +99,11 @@
         }
 
         function postForm() {
-            let form = document.getElementById("form");
-            let files = document.getElementById("imagePicker").files;
+            const form = document.getElementById("form");
+            const files = document.getElementById("imagePicker").files;
             if (files.length === 0) {
                 form.submit();
+                return;
             }
             let addedImages = 0;
             for (let file of files) {
