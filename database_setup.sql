@@ -3,6 +3,7 @@
 -- USE creatables
 
 -- Drop existing tables
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS Contains;
 DROP TABLE IF EXISTS Equipment_NeedsTools;
 DROP TABLE IF EXISTS PurchaseLink_Name;
@@ -14,6 +15,7 @@ DROP TABLE IF EXISTS Materials_MadeWith;
 DROP TABLE IF EXISTS Projects_PostsProject;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS City_Timezones;
+DROP TABLE IF EXISTS CompletesProject;
 
 -- Create tables
 CREATE TABLE City_Timezones (
@@ -243,3 +245,5 @@ INSERT INTO Contains (WLID, PID)
 VALUES(4, 3);
 INSERT INTO Contains (WLID, PID)
 VALUES(4, 4);
+
+SET FOREIGN_KEY_CHECKS = 1;
