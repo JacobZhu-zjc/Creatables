@@ -61,7 +61,7 @@ if (isset($_POST["imageName"]) && isset($_POST["imageData"])
         && count($_POST["imageName"]) == count($_POST["imageData"])) {
     for ($i = 0; $i < count($_POST["imageName"]); $i++) {
         $newImage["name"] = htmlspecialchars($_POST["imageName"][$i]);
-        $newImage["data"] = b64_url_to_binary($_POST["imageData"][$i]);
+        $newImage["data"] = $_POST["imageData"][$i];
         $images[] = $newImage;
     }
 }

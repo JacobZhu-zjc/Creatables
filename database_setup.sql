@@ -38,7 +38,7 @@ CREATE TABLE Projects_PostsProject (
 );
 CREATE TABLE Images_ContainsImages (
     GalleryIndex INTEGER,
-    ImageData MEDIUMBLOB NOT NULL,
+    ImageData MEDIUMTEXT NOT NULL,
     Caption VARCHAR(100),
     PID INTEGER,
     PRIMARY KEY (GalleryIndex, PID),
@@ -50,7 +50,7 @@ CREATE TABLE Feedback_LeavesFeedback (
     Title VARCHAR(60),
     Stars TINYINT,
     Comment VARCHAR(500),
-    ImageData MEDIUMBLOB,
+    ImageData MEDIUMTEXT,
     Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     Username VARCHAR(40) NOT NULL,
     PID INTEGER NOT NULL,
@@ -166,20 +166,20 @@ VALUES ('I’m confused', 2, 'Jacob Zhu', 2);
 INSERT INTO Feedback_LeavesFeedback (Title, Comment, Username, PID)
 VALUES ('I’m Satisfied', 'My wife managed to follow these instructions', 'Bob Jones', 1);
 INSERT INTO Feedback_LeavesFeedback (Title, ImageData, Username, PID)
-VALUES ('A picture', 'image data would go here', 'Bob Jones', 3);
+VALUES ('A picture', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAlAQAAAAAsYlcCAAAACklEQVR4AWMaBQAIHgIHYH2qggAAAABJRU5ErkJggg==', 'Bob Jones', 3);
 INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
 VALUES ('I’m moderately happy', 4, 'John Fubar', 4);
 
 INSERT INTO Images_ContainsImages (GalleryIndex, ImageData, Caption, PID)
-VALUES (1, 'cat image data would go here', 'A Cat', 1);
+VALUES (1, 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAlAQAAAAAsYlcCAAAACklEQVR4AWMaBQAIHgIHYH2qggAAAABJRU5ErkJggg==', 'A Cat', 1);
 INSERT INTO Images_ContainsImages (GalleryIndex, ImageData, Caption, PID)
-VALUES (2, 'dog image data would go here', 'A Dog', 1);
+VALUES (2, 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAlAQAAAAAsYlcCAAAACklEQVR4AWMaBQAIHgIHYH2qggAAAABJRU5ErkJggg==', 'A Dog', 1);
 INSERT INTO Images_ContainsImages (GalleryIndex, ImageData, Caption, PID)
-VALUES (1, 'house image data would go here', 'My House', 2);
+VALUES (1, 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAlAQAAAAAsYlcCAAAACklEQVR4AWMaBQAIHgIHYH2qggAAAABJRU5ErkJggg==', 'My House', 2);
 INSERT INTO Images_ContainsImages (GalleryIndex, ImageData, Caption, PID)
-VALUES (1, 'selfie image data would go here', 'Selfie', 3);
+VALUES (1, 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAlAQAAAAAsYlcCAAAACklEQVR4AWMaBQAIHgIHYH2qggAAAABJRU5ErkJggg==', 'Selfie', 3);
 INSERT INTO Images_ContainsImages (GalleryIndex, ImageData, Caption, PID)
-VALUES (2, 'tire image data would go here', 'A Flat Tire', 3);
+VALUES (2, 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAlAQAAAAAsYlcCAAAACklEQVR4AWMaBQAIHgIHYH2qggAAAABJRU5ErkJggg==', 'A Flat Tire', 3);
 
 INSERT INTO ProjectWishlist_Creates (Name, Username)
 VALUES ('Coding Project', 'Sally Jones');

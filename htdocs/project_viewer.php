@@ -186,7 +186,7 @@ if (count($images) > 0) {
     echo("<h3>Gallery:</h3>");
     echo('<div class="top-margin scrollable">');
     foreach ($images as $image) {
-        echo(get_image_tag_from_blob($image["ImageData"]));
+        echo(get_image_tag_from_b64($image["ImageData"]));
         echo("<br>");
         echo("<p>" . $image["Caption"] . "</p>");
         echo("<hr>");
@@ -207,7 +207,7 @@ if (count($images) > 0) {
                     } else if (!is_null($review["Comment"])) {
                         echo($review["Comment"] . '<br>');
                     } else {
-                        echo(get_image_tag_from_blob($review["ImageData"]));
+                        echo(get_image_tag_from_b64($review["ImageData"]));
                         echo("<br>");
                     }
                     echo('<a href="profile.php?u=' . urlencode($review["Username"]) . '">' . $review["Username"] . '</a></li>');

@@ -15,11 +15,7 @@ $min_password_length = 5;
 $front_page_posts = 10;
 
 // Begin shared functions
-function get_image_tag_from_blob($blob) {
-    $b64 = base64_encode($blob);
-    return '<img src="data:image/png;base64,'.$b64.'">';
-}
-function b64_url_to_binary($data) {
-    return base64_decode(explode(",", $data, 2)[1]);
+function get_image_tag_from_b64($b64) {
+    return '<img src="'.$b64.'">';
 }
 ?>

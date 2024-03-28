@@ -50,10 +50,8 @@ if ($_POST["commentType"] == "text") {
     $stmt->execute();
 }
 if ($_POST["commentType"] == "image") {
-    $imageData = $_POST["imageData"];
     $stmt = $conn->prepare("INSERT INTO Feedback_LeavesFeedback (Title, ImageData, Username, PID) VALUES (?,?,?,?)");
-    $decoded = b64_url_to_binary($imageData);
-    $stmt->bind_param("sssi", $title, $decoded, $username, $PID);
+    $stmt->bind_param("sssi", $title, $_POST["imageData"], $username, $PID);
     $stmt->execute();
 }
 if ($_POST["commentType"] == "stars") {
