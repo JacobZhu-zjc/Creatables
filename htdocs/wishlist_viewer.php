@@ -106,20 +106,19 @@ if (isset($_SESSION["username"])) {
 <h3>Projects:</h3>
 <div>
     <?php
-        if (count($projects) == 0) {
+        if (count($projects) > 0) {
+            echo("<ul>");
+            foreach ($projects as $project) {
+                // TODO: add individual delete buttons for each project
+                echo('<li><a href="project_viewer.php?id='.urlencode($project["PID"]).'">');
+                echo($project["Name"]);
+                echo('</a></li>');
+            }
+            echo("</ul>");
+        } else {
             echo("<br>");
             echo("&ensp;No projects added yet...<br><br>");
-            return;
         }
-        
-        echo("<ul>");
-        foreach ($projects as $project) {
-            // TODO: add individual delete buttons for each project
-            echo('<li><a href="project_viewer.php?id='.urlencode($project["PID"]).'">');
-            echo($project["Name"]);
-            echo('</a></li>');
-        }
-        echo("</ul>");
     ?>
 </div>
 
