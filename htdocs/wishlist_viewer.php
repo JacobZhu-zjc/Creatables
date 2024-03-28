@@ -123,12 +123,21 @@ if (isset($_SESSION["username"])) {
 </div>
 
 <?php
-    // Optionally displaying the button to add new projects if the current user is the creator
     if ($logged_in_as_creator) {
+        // Optionally displaying the text field to add new projects if the current user is the creator
         echo('<form action="api/add_project_to_wishlist.php" method="post">');
         echo('<input type="text" placeholder="Project ID" name="projectID">');
         echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');
         echo('<input type="submit" value="ADD PROJECT">');
+        echo('</form>');
+
+        echo('<br><br>');
+
+        // Optionally displaying the text field to rename the wishlist if the current user is the creator
+        echo('<form action="api/update_wishlist.php" method="post">');
+        echo('<input type="text" placeholder="New wishlist name" name="wishlistName">');
+        echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');
+        echo('<input type="submit" value="UPDATE WISHLIST NAME">');
         echo('</form>');
     }
 ?>
