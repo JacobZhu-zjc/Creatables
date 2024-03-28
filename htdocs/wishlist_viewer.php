@@ -91,7 +91,7 @@ if (isset($_SESSION["username"])) {
 </head>
 <body>
 <h1><?= $result["Name"] ?></h1>
-<a href="profile.php?u=<?= urlencode($result["Username"]) ?>" id="nameTag"><?= $_SESSION["username"] ?></a>
+<a href="profile.php?u=<?= urlencode($result["Username"]) ?>" id="nameTag"><?= $result["Username"] ?></a>
 
 <?php
     // Optionally displaying the button to delete the wishlist if current user is the creator
