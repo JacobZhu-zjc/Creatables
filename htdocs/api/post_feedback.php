@@ -13,12 +13,6 @@ function redirect_with_error($message) {
 }
 
 
-//commentType
-//title
-//comment
-//png
-//rating
-
 
 session_start();
 //rating, title, png, comment
@@ -32,7 +26,7 @@ if (!isset($_POST["title"]) || strlen($_POST["title"]) == 0) {
 if (!isset($_POST["comment"]) || (($_POST["commentType"] == "stars") && strlen($_POST["rating"]) == 0)) { //Check if for comment type being right nah
     redirect_with_error("You must enter valid Comment");
 }
-if (!isset($_POST["png"]) || (($_POST["commentType"] == "png") && strlen($_POST["png"]) == 0)) {
+if (!isset($_POST["imageData"]) || (($_POST["commentType"] == "png") && strlen($_POST["imageData"]) == 0)) {
     redirect_with_error("You must enter valid png");
 }
 if (!isset($_POST["rating"]) || strlen($_POST["rating"]) == 0) {
@@ -46,7 +40,6 @@ if ($conn->connect_error) {
 
 $username = $_SESSION["username"];
 $title = $_POST["title"];
-var_dump($_POST);
 $PID = $_POST["pidGrabber"];
 
 
@@ -57,9 +50,10 @@ if ($_POST["commentType"] == "text") {
     $stmt->execute();
 }
 if ($_POST["commentType"] == "image") {
-    $imageData = $_POST["png"];
+    $imageData = $_POST["imageData"];
     $stmt = $conn->prepare("INSERT INTO Feedback_LeavesFeedback (Title, ImageData, Username, PID) VALUES (?,?,?,?)");
-    $stmt->bind_param("sssi", $title, $imageData, $username, $PID);
+    $decoded = b64_url_to_binary($imageData);
+    $stmt->bind_param("sssi", $title, $decoded, $username, $PID);
     $stmt->execute();
 }
 if ($_POST["commentType"] == "stars") {
@@ -70,8 +64,8 @@ if ($_POST["commentType"] == "stars") {
 }
 
 $conn->close();
-
-
-
 ?>
 
+<script>
+window.history.back();
+</script>

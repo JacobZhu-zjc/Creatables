@@ -75,6 +75,11 @@ if (isset($_SESSION["username"])) {
             width: 100%;
         }
 
+        .scrollable {
+            height: 40vh;
+            overflow-y: scroll;
+        }
+
         image {
             height: 100px;
             width: auto;
@@ -178,8 +183,8 @@ if (count($materials) > 0) {
 </div>
 <?php
 if (count($images) > 0) {
-    echo('<div class="top-margin">');
     echo("<h3>Gallery:</h3>");
+    echo('<div class="top-margin scrollable">');
     foreach ($images as $image) {
         echo(get_image_tag_from_blob($image["ImageData"]));
         echo("<br>");
@@ -191,7 +196,7 @@ if (count($images) > 0) {
 ?>
 <div>
     <h3>Reviews:</h3>
-    <div id="review_content">
+    <div id="review_content" class="scrollable">
         <ul>
             <?php
             if (count($feedback) > 0) {
@@ -202,9 +207,8 @@ if (count($images) > 0) {
                     } else if (!is_null($review["Comment"])) {
                         echo($review["Comment"] . '<br>');
                     } else {
-                        echo(get_image_tag_from_blob($image["ImageData"]));
+                        echo(get_image_tag_from_blob($review["ImageData"]));
                         echo("<br>");
-                        echo("<p>" . $image["Caption"] . "</p>");
                     }
                     echo('<a href="profile.php?u=' . urlencode($review["Username"]) . '">' . $review["Username"] . '</a></li>');
                 }
@@ -218,12 +222,12 @@ if (count($images) > 0) {
 <div>
     <h3>Post a review:</h3>
     <form action="api/post_feedback.php" method="post" id="ratingForm">
+    <input type="text" placeholder="Add a title!" id="titleInput" name="title">
         <select name="commentType" id="commentType">
             <option value="text">Text</option>
             <option value="stars">Star rating</option>
             <option value="image">Upload image</option>
         </select>
-        <input type="text" placeholder="Add a title!" id="titleInput" name="title">
         <br>
         <div id="text">
             <textarea name="comment" placeholder="Say something nice..." id="commentInput"></textarea>
@@ -231,13 +235,7 @@ if (count($images) > 0) {
         <div id="image">
             <input type="file" id="imagePicker" accept="image/png" name="png">
         </div>
-
-        <div id="pid">
-            <select name="pidGrabber" id="pidGrabber">
-                <option value="<?=$pid?>">1</option> 
-            </select>
-        </div>
-        
+        <input type="text" style="display: none" name="pidGrabber" value="<?= $pid ?>">
         <div id="stars">
             <select name="rating" id="userRating">
                 <option value="1">1</option>
