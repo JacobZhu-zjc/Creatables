@@ -12,37 +12,66 @@ function redirect_with_error($message) {
     die();
 }
 
+
+//commentType
+//title
+//comment
+//png
+//rating
+
+
 session_start();
 //rating, title, png, comment
 
-if (!isset($_POST["Comment"]) || strlen($_POST["Comment"]) == 0) {
+if (!isset($_POST["commentType"]) || strlen($_POST["commentType"]) == 0) {
+    redirect_with_error("Error");
+}
+if (!isset($_POST["title"]) || strlen($_POST["title"]) == 0) {
+    redirect_with_error("You must enter valid title");
+}
+if (!isset($_POST["comment"]) || (($_POST["commentType"] == "stars") && strlen($_POST["rating"]) == 0)) { //Check if for comment type being right nah
     redirect_with_error("You must enter valid Comment");
 }
-
-if (!isset($_POST["instructions"]) || strlen($_POST["instructions"]) == 0) {
-    redirect_with_error("You must enter valid instructions");
+if (!isset($_POST["png"]) || (($_POST["commentType"] == "png") && strlen($_POST["png"]) == 0)) {
+    redirect_with_error("You must enter valid png");
 }
-
-if (!isset($_POST["instructions"]) || strlen($_POST["instructions"]) == 0) {
-    redirect_with_error("You must enter valid instructions");
+if (!isset($_POST["rating"]) || strlen($_POST["rating"]) == 0) {
+    redirect_with_error("You must enter valid rating");
 }
-
-$comment = $_SESSION["Comment"];
-
-$title = $_SESSION["Title"];
-
-$pid = $_GET["id"]; //How to specify from which table?
-
-$username = $_SESSION["username"];
 
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
 if ($conn->connect_error) {
     redirect_with_error("Server error"); // Don't tell the user too much...
 }
+
+$username = $_SESSION["username"];
+$title = $_POST["title"];
+var_dump($_POST);
+$PID = $_POST["pidGrabber"];
+
+
+if ($_POST["commentType"] == "text") {
+    $comment = $_POST["title"];
+    $stmt = $conn->prepare("INSERT INTO Feedback_LeavesFeedback (Title, Comment, Username, PID) VALUES (?,?,?,?)");
+    $stmt->bind_param("sssi", $title, $comment, $username, $PID);
+    $stmt->execute();
+}
+if ($_POST["commentType"] == "image") {
+    $imageData = $_POST["png"];
+    $stmt = $conn->prepare("INSERT INTO Feedback_LeavesFeedback (Title, ImageData, Username, PID) VALUES (?,?,?,?)");
+    $stmt->bind_param("sssi", $title, $imageData, $username, $PID);
+    $stmt->execute();
+}
+if ($_POST["commentType"] == "stars") {
+    $stars = $_POST["stars"];
+    $stmt = $conn->prepare("INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID) VALUES (?,?,?,?)");
+    $stmt->bind_param("sssi", $title, $stars, $username, $PID);
+    $stmt->execute();
+}
+
 $conn->close();
 
-$stmt = $conn->prepare("INSERT INTO Feedback_LeavesFeedback (Title, Comment, Username, PID) VALUES (?,?,?,?)");
-$stmt->bind_param("sssi", $title, $comment, $username, $pid);
-$stmt->execute();
+
 
 ?>
+
