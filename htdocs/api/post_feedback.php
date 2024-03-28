@@ -42,7 +42,7 @@ $PID = $_POST["pidGrabber"];
 
 
 if ($_POST["commentType"] == "text") {
-    $comment = $_POST["title"];
+    $comment = $_POST["comment"];
     $stmt = $conn->prepare("INSERT INTO Feedback_LeavesFeedback (Title, Comment, Username, PID) VALUES (?,?,?,?)");
     $stmt->bind_param("sssi", $title, $comment, $username, $PID);
     $stmt->execute();
