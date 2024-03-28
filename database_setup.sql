@@ -35,6 +35,7 @@ CREATE TABLE Projects_PostsProject (
     Username VARCHAR(40) NOT NULL,
     FOREIGN KEY (Username) REFERENCES Users(Username)
         ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 CREATE TABLE Images_ContainsImages (
     GalleryIndex INTEGER,
@@ -55,7 +56,8 @@ CREATE TABLE Feedback_LeavesFeedback (
     Username VARCHAR(40) NOT NULL,
     PID INTEGER NOT NULL,
     FOREIGN KEY (Username) REFERENCES Users(Username)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY (PID) REFERENCES Projects_PostsProject(PID)
         ON DELETE CASCADE
 );
@@ -66,9 +68,11 @@ CREATE TABLE Message_Sends (
     SenderUsername VARCHAR(40) NOT NULL,
     ReceiverUsername VARCHAR(40) NOT NULL,
     FOREIGN KEY (SenderUsername) REFERENCES Users(Username)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY (ReceiverUsername) REFERENCES Users(Username)
         ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 CREATE TABLE ProjectWishlist_Creates (
     WLID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -76,6 +80,7 @@ CREATE TABLE ProjectWishlist_Creates (
     Username VARCHAR(40) NOT NULL,
     FOREIGN KEY (Username) REFERENCES Users(Username)
         ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 CREATE TABLE PurchaseLink_Name (
     PurchaseLink VARCHAR(100) PRIMARY KEY,
