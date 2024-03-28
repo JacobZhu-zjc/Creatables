@@ -126,7 +126,7 @@ if (isset($_SESSION["username"])) {
 <?php
     // Optionally displaying the button to add new projects if the current user is the creator
     if ($logged_in_as_creator) {
-        echo('<form action="api/update_wishlist.php" method="post">');
+        echo('<form action="api/add_project_to_wishlist.php" method="post">');
         echo('<input type="text" placeholder="Project ID" name="projectID">');
         echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');
         echo('<input type="submit" value="ADD PROJECT">');
