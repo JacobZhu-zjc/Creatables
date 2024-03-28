@@ -1,10 +1,16 @@
 <?php
 require("api/config.php");
 
-// if (!isset($_GET["id"]) || strlen($_GET["id"]) == 0) {
-//     echo("<h1>Please specify a project</h1>");
-//     die();
-// }
+if (isset($_GET["err"]) && strlen($_GET["err"])) {
+    echo(htmlspecialchars($_GET["err"]));
+    echo("<br><br>");
+    die();
+}
+
+if (!isset($_GET["id"]) || strlen($_GET["id"]) == 0) {
+    echo("<h1>Please specify a project</h1>");
+    die();
+}
 
 $pid = $_GET["id"];
 
@@ -235,7 +241,7 @@ if (count($images) > 0) {
         <div id="image">
             <input type="file" id="imagePicker" accept="image/png" name="png">
         </div>
-        <input type="text" style="display: none" name="pidGrabber" value="<?= $pid ?>">
+        <input type="hidden" name="pidGrabber" value="<?= $pid ?>">
         <div id="stars">
             <select name="rating" id="userRating">
                 <option value="1">1</option>

@@ -12,8 +12,6 @@ function redirect_with_error($message) {
     die();
 }
 
-
-
 session_start();
 //rating, title, png, comment
 
@@ -23,13 +21,13 @@ if (!isset($_POST["commentType"]) || strlen($_POST["commentType"]) == 0) {
 if (!isset($_POST["title"]) || strlen($_POST["title"]) == 0) {
     redirect_with_error("You must enter valid title");
 }
-if (!isset($_POST["comment"]) || (($_POST["commentType"] == "stars") && strlen($_POST["rating"]) == 0)) { //Check if for comment type being right nah
+if (($_POST["commentType"] == "stars") && (!isset($_POST["comment"]) || strlen($_POST["rating"]) == 0)) { //Check if for comment type being right nah
     redirect_with_error("You must enter valid Comment");
 }
-if (!isset($_POST["imageData"]) || (($_POST["commentType"] == "png") && strlen($_POST["imageData"]) == 0)) {
+if (($_POST["commentType"] == "png") && (!isset($_POST["imageData"]) || strlen($_POST["imageData"]) == 0)) {
     redirect_with_error("You must enter valid png");
 }
-if (!isset($_POST["rating"]) || strlen($_POST["rating"]) == 0) {
+if (($_POST["commentType"] == "rating") && (!isset($_POST["rating"]) || strlen($_POST["rating"]) == 0)) {
     redirect_with_error("You must enter valid rating");
 }
 
@@ -65,5 +63,5 @@ $conn->close();
 ?>
 
 <script>
-window.history.back();
+window.history.go(-1);
 </script>
