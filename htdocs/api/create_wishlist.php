@@ -34,9 +34,9 @@ if ($conn->connect_error) {
 $stmt = $conn->prepare("INSERT INTO ProjectWishlist_Creates (Name, Username) VALUES (?,?)");
 $stmt->bind_param("ss", $title, $username);
 $stmt->execute();
-$wlid = $conn->insert_id;
+$wishlistID = $conn->insert_id;
 $conn->close();
 
 // Redirecting to wishlist viewer page
-header("Location: ../wishlist_viewer.php?id=".urlencode($wlid));
+header("Location: ../wishlist_viewer.php?id=".urlencode($wishlistID));
 ?>

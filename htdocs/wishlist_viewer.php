@@ -71,6 +71,9 @@ if (isset($_SESSION["username"])) {
             margin-top: 10px;
             float: right;
         }
+        input {
+            margin-left: 5px;
+        }
         #nameTag {
             font-size: 30px;
             margin: 5px;
@@ -133,11 +136,12 @@ if (isset($_SESSION["username"])) {
 
         echo('<br><br>');
 
-        // Optionally displaying the text field to rename the wishlist if the current user is the creator
+        // Optionally displaying the text field to rename the wishlist or to send the wishlist to someone else, if the current user is the creator
         echo('<form action="api/update_wishlist.php" method="post">');
-        echo('<input type="text" placeholder="New wishlist name" name="wishlistName">');
+        echo('<input type="text" placeholder="New wishlist name" name="newWishlistName">');
+        echo('<input type="text" placeholder="Username of new wishlist owner" name="newUsername">');
         echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');
-        echo('<input type="submit" value="UPDATE WISHLIST NAME">');
+        echo('<input type="submit" value="UPDATE WISHLIST">');
         echo('</form>');
     }
 ?>

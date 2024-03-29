@@ -6,6 +6,11 @@ function redirect_to_error_page($message) {
     die();
 }
 
+function redirect_with_error($message) {
+    header("Location: ../wishlist_viewer.php?err=".urlencode($message));
+    die();
+}
+
 // Retrieving session data and data from form when DELETE is clicked
 session_start();
 if (!isset($_SESSION["username"])) {
@@ -18,16 +23,37 @@ if (!isset($_POST["wishlistID"]) || !filter_var($_POST["wishlistID"], FILTER_VAL
 }
 $wishlistID = $_POST["wishlistID"];
 
-if (!isset($_POST["wishlistName"]) || strlen($_POST["wishlistName"]) == 0) {
-    redirect_with_error("Internal error: wishlist ID invalid");
-}
-$newWishlistName = $_POST["wishlistName"];
+// Setting up variables to determine if one or both of the fields are to be updated
+$hasNewWishlistName = false;
+$hasNewUsername = false;
 
-// Update wishlist
+if (isset($_POST["newWishlistName"]) && strlen($_POST["newWishlistName"]) > 0) {
+    $hasNewWishlistName = true;
+}
+if (isset($_POST["newUsername"]) && strlen($_POST["newUsername"]) > 0) {
+    $hasNewUsername = true;
+}
+
+if (!$hasNewWishlistName && !$hasNewUsername) {
+    redirect_with_error("Specify a wishlist name or username before attempting to update!");
+}
+
+// Update wishlist tuple in MySQL database
+
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
-$stmt = $conn->prepare("DELETE ProjectWishlist_Creates SET Name=? WHERE Username=? AND WLID=?");
-$stmt->bind_param("ssi", $newWishlistName, $username, $wishlistID);
-$stmt->execute();
+if (!$hasNewWishlistName) {
+    $stmt = $conn->prepare("UPDATE ProjectWishlist_Creates SET Username=? WHERE Username=? AND WLID=?");
+    $stmt->bind_param("ssi", $_POST["newUsername"], $username, $wishlistID);
+    $stmt->execute();
+} else if (!$hasNewUsername) {
+    $stmt = $conn->prepare("UPDATE ProjectWishlist_Creates SET Name=? WHERE Username=? AND WLID=?");
+    $stmt->bind_param("ssi", $_POST["newWishlistName"], $username, $wishlistID);
+    $stmt->execute();
+} else {
+    $stmt = $conn->prepare("UPDATE ProjectWishlist_Creates SET Name=?, Username=? WHERE Username=? AND WLID=?");
+    $stmt->bind_param("sssi", $_POST["newWishlistName"], $_POST["newUsername"], $username, $wishlistID);
+    $stmt->execute();
+}
 $conn->close();
 
 header("Location: ../wishlist_viewer.php?id=".urlencode($wishlistID));
