@@ -31,14 +31,17 @@ if (($_POST["commentType"] == "rating") && (!isset($_POST["rating"]) || strlen($
     redirect_with_error("You must enter valid rating");
 }
 
+if (!isset($_SESSION["username"])) {
+    redirect_with_error("Must be logged in to post feedback");
+}
+$username = $_SESSION["username"];
+$title = $_POST["title"];
+$PID = $_POST["pidGrabber"];
+
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
 if ($conn->connect_error) {
     redirect_with_error("Server error"); // Don't tell the user too much...
 }
-
-$username = $_SESSION["username"];
-$title = $_POST["title"];
-$PID = $_POST["pidGrabber"];
 
 
 if ($_POST["commentType"] == "text") {
@@ -53,7 +56,7 @@ if ($_POST["commentType"] == "image") {
     $stmt->execute();
 }
 if ($_POST["commentType"] == "stars") {
-    $stars = $_POST["stars"];
+    $stars = $_POST["rating"];
     $stmt = $conn->prepare("INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID) VALUES (?,?,?,?)");
     $stmt->bind_param("sssi", $title, $stars, $username, $PID);
     $stmt->execute();
