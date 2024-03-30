@@ -93,6 +93,10 @@ if (isset($_SESSION["username"])) {
             margin-bottom: 10px;
         }
 
+        em {
+            color: red;
+        }
+
         .postButton {
             margin-top: 10px;
         }
