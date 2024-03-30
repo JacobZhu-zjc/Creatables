@@ -65,6 +65,8 @@ $logged_in = isset($_SESSION["username"]);
         ?>
         </tbody>
     </table>
+    <br>
+    <a href="search.php">SEARCH</a>
 <h3>Total projects: <?= $count ?></h3>
 </body>
 </html>
