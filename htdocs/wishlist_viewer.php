@@ -2,16 +2,6 @@
 // Establishing PHP variables that are used elsewhere in the HTML page
 require("api/config.php");
 
-if (isset($_GET["err"]) && strlen($_GET["err"])) {
-    echo('<em id="error">');
-    echo('<strong>');
-    echo(htmlspecialchars($_GET["err"]));
-    echo("<br><br>");
-    echo('</strong>');
-    echo('</em>');    
-    return;
-}
-
 // Finding the appropriate wishlist from the database and pulling the required info
 if ((!isset($_GET["id"]) || strlen($_GET["id"]) == 0)) {
     echo("<h1>Please specify a wishlist</h1>");
@@ -93,6 +83,18 @@ if (isset($_SESSION["username"])) {
     </style>
 </head>
 <body>
+<!-- Displaying any error messages -->
+<em>
+    <strong>
+        <?php
+        if (isset($_GET["err"]) && strlen($_GET["err"])) {
+            echo(htmlspecialchars($_GET["err"]));
+            echo("<br><br>");
+        }
+        ?>
+    </strong>
+</em>
+
 <h1><?= $result["Name"] ?></h1>
 <a href="profile.php?u=<?= urlencode($result["Username"]) ?>" id="nameTag"><?= $result["Username"] ?></a>
 

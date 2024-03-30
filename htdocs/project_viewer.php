@@ -1,12 +1,6 @@
 <?php
 require("api/config.php");
 
-if (isset($_GET["err"]) && strlen($_GET["err"])) {
-    echo(htmlspecialchars($_GET["err"]));
-    echo("<br><br>");
-    die();
-}
-
 if (!isset($_GET["id"]) || strlen($_GET["id"]) == 0) {
     echo("<h1>Please specify a project</h1>");
     die();
@@ -145,6 +139,18 @@ if (isset($_SESSION["username"])) {
     </style>
 </head>
 <body>
+<!-- Displaying any error messages -->
+<em>
+    <strong>
+        <?php
+        if (isset($_GET["err"]) && strlen($_GET["err"])) {
+            echo(htmlspecialchars($_GET["err"]));
+            echo("<br><br>");
+        }
+        ?>
+    </strong>
+</em>
+
 <h1><?= $result["Name"] ?></h1>
 <h2>By <a href="profile.php?u=<?= urlencode($result["Username"]) ?>"><?= $result["Username"] ?></a></h2>
 <?php

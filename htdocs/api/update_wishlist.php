@@ -7,7 +7,7 @@ function redirect_to_error_page($message) {
     die();
 }
 function redirect_with_error($message) {
-    header("Location: ../wishlist_viewer.php?err=".urlencode($message));
+    header("Location: ../wishlist_viewer.php?err=".urlencode($message)."&id=".$_POST["wishlistID"]);
     die();
 }
 function validate_username($newUsername) {
@@ -31,7 +31,7 @@ if (!isset($_SESSION["username"])) {
     redirect_to_error_page("Authentication error");
 }
 if (!isset($_POST["wishlistID"]) || !filter_var($_POST["wishlistID"], FILTER_VALIDATE_INT) || $_POST["wishlistID"] < 1) {
-    redirect_with_error("Internal error: wishlist ID invalid");
+    redirect_to_error_page("Internal error: wishlist ID invalid");
 }
 $username = $_SESSION["username"];
 $wishlistID = $_POST["wishlistID"];
@@ -47,7 +47,6 @@ if (isset($_POST["newUsername"]) && strlen($_POST["newUsername"]) > 0) {
     validate_username($_POST["newUsername"]);
     $hasNewUsername = true;
 }
-
 if (!$hasNewWishlistName && !$hasNewUsername) {
     redirect_with_error("Specify a wishlist name or username before attempting to update!");
 }
