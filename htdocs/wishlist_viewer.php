@@ -64,6 +64,9 @@ if (isset($_SESSION["username"])) {
         input {
             margin-left: 5px;
         }
+        em {
+            color: red;
+        }
         #nameTag {
             font-size: 30px;
             margin: 5px;

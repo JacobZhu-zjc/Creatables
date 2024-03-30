@@ -10,11 +10,7 @@ function redirect_with_error($message) {
     header("Location: ../wishlist_viewer.php?err=".urlencode($message)."&id=".$_POST["wishlistID"]);
     die();
 }
-function validate_username($newUsername) {
-    $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
-    if ($conn->connect_error) {
-        die("Unable to connect to database");
-    }
+function validate_username($conn, $newUsername) {
     $stmt = $conn->prepare("SELECT * FROM Users WHERE Username=?");
     $stmt->bind_param("s", $newUsername);
     $stmt->execute();
@@ -22,7 +18,6 @@ function validate_username($newUsername) {
         $conn->close();
         redirect_with_error("Specified user does not exist!");
     }
-    $conn->close();
 }
 
 // Retrieving session data and data from form when DELETE is clicked
@@ -37,6 +32,10 @@ $username = $_SESSION["username"];
 $wishlistID = $_POST["wishlistID"];
 
 // Setting up variables to determine if one or both of the fields are to be updated
+$conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
+if ($conn->connect_error) {
+    die("Unable to connect to database");
+}
 $hasNewWishlistName = false;
 $hasNewUsername = false;
 
@@ -44,7 +43,7 @@ if (isset($_POST["newWishlistName"]) && strlen($_POST["newWishlistName"]) > 0) {
     $hasNewWishlistName = true;
 }
 if (isset($_POST["newUsername"]) && strlen($_POST["newUsername"]) > 0) {
-    validate_username($_POST["newUsername"]);
+    validate_username($conn, $_POST["newUsername"]);
     $hasNewUsername = true;
 }
 if (!$hasNewWishlistName && !$hasNewUsername) {
@@ -52,10 +51,6 @@ if (!$hasNewWishlistName && !$hasNewUsername) {
 }
 
 // Updating the wishlist tuple in the MySQL database
-$conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
-if ($conn->connect_error) {
-    die("Unable to connect to database");
-}
 if (!$hasNewWishlistName) {
     $stmt = $conn->prepare("UPDATE ProjectWishlist_Creates SET Username=? WHERE Username=? AND WLID=?");
     $stmt->bind_param("ssi", $_POST["newUsername"], $username, $wishlistID);
