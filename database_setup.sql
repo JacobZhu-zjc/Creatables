@@ -133,6 +133,8 @@ VALUES ('London', 0);
 INSERT INTO City_Timezones (City, Timezone)
 VALUES ('Berlin', 1);
 
+
+
 INSERT INTO Users (Username, PasswordHash, City)
 VALUES ('Bob Jones', '5f4dcc3b5aa765d61d8327deb882cf99', 'Vancouver');
 INSERT INTO Users (Username, PasswordHash, City)
@@ -143,6 +145,9 @@ INSERT INTO Users (Username, PasswordHash, City)
 VALUES ('Sally Jones', 'b8bba2baae4c2a08fdff4e223458577d', 'London');
 INSERT INTO Users (Username, PasswordHash, City)
 VALUES ('Michael Morbius', '6104b739e435902b40b54085aa3953f9', 'Berlin');
+INSERT INTO Users (Username, PasswordHash, City, JoinDate)
+VALUES ('Future Fellow', '6104b739e435902b39b54085aa3953f9', 'France', '2025:01:01');
+
 
 INSERT INTO Message_Sends (Text, ReceiverUsername, SenderUsername)
 VALUES ('Hello!', 'Sally Jones', 'Bob Jones');
@@ -166,6 +171,7 @@ VALUES ('Tear down drywall', 'Use hammer to deconstruct drywall', 'Bob Jones');
 INSERT INTO Projects_PostsProject (Name, InstructionText, Username)
 VALUES ('Construct bed', 'Build IKEA bed', 'Michael Morbius');
 
+
 INSERT INTO Feedback_LeavesFeedback (Title, Comment, Username, PID)
 VALUES ('I hate this product', 'My wife left me because of these unclear instructions', 'Michael Morbius', 1);
 INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
@@ -176,6 +182,19 @@ INSERT INTO Feedback_LeavesFeedback (Title, ImageData, Username, PID)
 VALUES ('A picture', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAlAQAAAAAsYlcCAAAACklEQVR4AWMaBQAIHgIHYH2qggAAAABJRU5ErkJggg==', 'Bob Jones', 3);
 INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
 VALUES ('I’m moderately happy', 4, 'John Fubar', 4);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('I’m very dissatisfied', 1, 'Jacob Zhu', 4);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('I’m happy', 5, 'Future Fellow', 4);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('Mid', 3, 'Bob Jones', 4);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('Pretty good', 4, 'Sally Jones', 4);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('I’m Michael Morbius!', 5, 'Michael Morbius', 4);
+
+
+
 
 INSERT INTO Images_ContainsImages (GalleryIndex, ImageData, Caption, PID)
 VALUES (1, 'data:image/png;base64,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',
@@ -201,6 +220,7 @@ INSERT INTO ProjectWishlist_Creates (Name, Username)
 VALUES ('Homework Research', 'Sally Jones');
 INSERT INTO ProjectWishlist_Creates (Name, Username)
 VALUES ('Hiking Preparation', 'Jacob Zhu');
+
 
 INSERT INTO PurchaseLink_Name (PurchaseLink, Name)
 VALUES ('https://www.amazon.ca/hammer/s?k=hammer', 'Hammer');
