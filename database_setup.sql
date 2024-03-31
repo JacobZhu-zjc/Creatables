@@ -155,10 +155,10 @@ VALUES ('My wife left me because of your project.', 'Michael Morbius', 'Bob Jone
 INSERT INTO Message_Sends (Text, ReceiverUsername, SenderUsername)
 VALUES ('Hello world!', 'Jacob Zhu', 'Sally Jones');
 
-INSERT INTO Projects_PostsProject (Name, InstructionText, Username)
-VALUES ('Arrange Plants', 'Arrange plants in an aesthetic way!', 'Bob Jones');
-INSERT INTO Projects_PostsProject (Name, InstructionText, Username)
-VALUES ('Read Textbook', 'Read the math textbook and finish the questions', 'Sally Jones');
+INSERT INTO Projects_PostsProject (Name, InstructionText, Username, Timestamp)
+VALUES ('Arrange Plants', 'Arrange plants in an aesthetic way!', 'Bob Jones', '2023-03-28 16:30:57');
+INSERT INTO Projects_PostsProject (Name, InstructionText, Username, Timestamp)
+VALUES ('Read Textbook', 'Read the math textbook and finish the questions', 'Sally Jones', '2023-08-10 12:30:50');
 INSERT INTO Projects_PostsProject (Name, InstructionText, Username)
 VALUES ('Take a walk', 'Take a walk outside!', 'Jacob Zhu');
 INSERT INTO Projects_PostsProject (Name, InstructionText, Username)
