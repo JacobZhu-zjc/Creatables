@@ -1,5 +1,5 @@
 <?php
-require("config.php"); //is it legql to copy pasta documentation w3schools?
+require("config.php");
 session_start();
 header("Content-Type: application/json; charset=UTF-8");
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
