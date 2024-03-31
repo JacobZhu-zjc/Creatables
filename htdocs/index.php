@@ -79,6 +79,9 @@ $logged_in = isset($_SESSION["username"]);
     </table>
     <br>
     <a href="search.php">SEARCH</a>
+    <br>
+    <br>
+    <a href="extra_info.php">INTERESTING STATS</a>
     <?php
         if (!is_null($max_avg)) {
             echo("<h3>Best project(s):</h3>");
@@ -91,3 +94,6 @@ $logged_in = isset($_SESSION["username"]);
 <h3>Total projects: <?= $count ?></h3>
 </body>
 </html>
+
+
+
