@@ -63,7 +63,7 @@ $fields = $result->fetch_fields();
 $conn->close();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <style>
         table, th, td {
@@ -75,22 +75,14 @@ $conn->close();
 </head>
 <body>
     <?php
+    /**
+     * @param array $fields
+     * @param array $rows
+     * @return void
+     */
     if (count($rows) > 0) {
         echo("<h3>" . count($rows) . " results:</h3>");
-        echo("<table>");
-        echo("<tr>");
-        foreach ($fields as $field) {
-            echo("<th>" . $field->name . "</th>");
-        }
-        echo("</tr>");
-        foreach ($rows as $row) {
-            echo("<tr>");
-            foreach ($row as $col) {
-                echo("<td>$col</td>");
-            }
-            echo("</tr>");
-        }
-        echo("</tbody></table>");
+        echo_table($fields, $rows);
     } else {
         echo("<h3>No matching results.</h3>");
     }

@@ -146,7 +146,7 @@ VALUES ('Sally Jones', 'b8bba2baae4c2a08fdff4e223458577d', 'London');
 INSERT INTO Users (Username, PasswordHash, City)
 VALUES ('Michael Morbius', '6104b739e435902b40b54085aa3953f9', 'Berlin');
 INSERT INTO Users (Username, PasswordHash, City, JoinDate)
-VALUES ('Future Fellow', '6104b739e435902b39b54085aa3953f9', 'France', '2025:01:01');
+VALUES ('Future Fellow', '6104b739e435902b39b54085aa3953f9', 'Quebec City', '2025:01:01');
 
 
 INSERT INTO Message_Sends (Text, ReceiverUsername, SenderUsername)
