@@ -61,6 +61,7 @@ $conn->close();
     <br>
     <input type="submit">
 </form>
+<br>
 <iframe name="searchFrame" src="about:blank" style="width:100%; height:300px; border: none"></iframe>
 <script>
     const tablePicker = document.getElementById("table");
