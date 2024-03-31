@@ -7,22 +7,22 @@
     <script>
         let params;
         const searchParamHTML = `
-        <select>
+        <select name="conns[]">
             <option value="AND" selected>AND</option>
             <option value="OR">OR</option>
         </select>
-        <select>
+        <select name="attrs[]">
             <option value="Name" selected>Project Name (String)</option>
             <option value="PID">Project ID (Integer)</option>
             <option value="Username">Author Username (String)</option>
             <option value="Timestamp">Project Timestamp (Datetime)</option>
         </select>
-        <select>
+        <select name="ops[]">
             <option value="eq" selected>=</option>
             <option value="gt">&gt;</option>
             <option value="lt">&lt;</option>
         </select>
-        <input type="text" placeholder="Value">`;
+        <input type="text" name="vals[]" placeholder="Value">`;
 
         function addSearchParameter() {
             const toAdd = document.createElement("div");
@@ -35,36 +35,6 @@
                 params.removeChild(params.lastChild);
             }
         }
-
-        function sendSearchRequest() {
-            document.getElementById("searchFrame").src = "api/search_results.php?" + firstParameter() + otherParameters();
-        }
-
-        function firstParameter() {
-            const fields = document.getElementById("firstSearchParameter").children;
-            const attribute = encodeURIComponent(fields[0].value);
-            const operator = encodeURIComponent(fields[1].value);
-            const value = encodeURIComponent(fields[2].value);
-            return "attrs[]=" + attribute + "&ops[]=" + operator + "&vals[]=" + value;
-        }
-
-        function otherParameters() {
-            let queryString = "";
-            const additionalParameters = params.children;
-            for (const param of additionalParameters) {
-                const fields = param.children;
-                const connective = encodeURIComponent(fields[0].value);
-                const attribute = encodeURIComponent(fields[1].value);
-                const operator = encodeURIComponent(fields[2].value);
-                const value = encodeURIComponent(fields[3].value);
-                queryString = queryString.concat(
-                    "&attrs[]=", attribute,
-                    "&ops[]=", operator,
-                    "&vals[]=", value,
-                    "&conns[]=", connective);
-            }
-            return queryString;
-        }
     </script>
 </head>
 <body>
@@ -72,32 +42,34 @@
 <h1>SEARCH PROJECTS</h1>
 <em>Reminder: AND is always evaluated before OR.</em>
 <br><br>
-<div id="firstSearchParameter">
-    <select style="margin-left: 60px">
-        <option value="Name" selected>Project Name (String)</option>
-        <option value="PID">Project ID (Integer)</option>
-        <option value="Username">Author Username (String)</option>
-        <option value="Timestamp">Project Timestamp (Datetime)</option>
-    </select>
-    <select>
-        <option value="eq" selected>=</option>
-        <option value="gt">&gt;</option>
-        <option value="lt">&lt;</option>
-    </select>
-    <input type="text" placeholder="Value">
-</div>
-<div id="additionalSearchParameters">
-</div>
-<script>
-    params = document.getElementById("additionalSearchParameters");
-</script>
-<br>
-<button onclick="addSearchParameter()">+</button>
-<button onclick="removeSearchParameter()">-</button>
-<br>
-<br>
-<button onclick="sendSearchRequest()">SEARCH</button>
+<form action="api/search_results.php" target="searchFrame" method="get">
+    <div id="firstSearchParameter">
+        <select style="margin-left: 60px" name="attrs[]">
+            <option value="Name" selected>Project Name (String)</option>
+            <option value="PID">Project ID (Integer)</option>
+            <option value="Username">Author Username (String)</option>
+            <option value="Timestamp">Project Timestamp (Datetime)</option>
+        </select>
+        <select name="ops[]">
+            <option value="eq" selected>=</option>
+            <option value="gt">&gt;</option>
+            <option value="lt">&lt;</option>
+        </select>
+        <input type="text" placeholder="Value" name="vals[]">
+    </div>
+    <div id="additionalSearchParameters">
+    </div>
+    <script>
+        params = document.getElementById("additionalSearchParameters");
+    </script>
+    <br>
+    <button onclick="addSearchParameter()" type="button">+</button>
+    <button onclick="removeSearchParameter()" type="button">-</button>
+    <br>
+    <br>
+    <input type="submit" value="SEARCH">
+</form>
 <br><br>
-<iframe id="searchFrame" src="api/search_results.php" style="width:100%; height:300px; border: none"></iframe>
+<iframe name="searchFrame" src="api/search_results.php" style="width:100%; height:300px; border: none"></iframe>
 </body>
 </html>
