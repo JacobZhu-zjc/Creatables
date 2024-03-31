@@ -48,6 +48,7 @@ $conn->close();
     </script>
 </head>
 <body>
+<h2><a href="index.php">HOME</a></h2>
 <h1>COLUMN PROJECTION</h1>
 <form action="api/projection_results.php" target="searchFrame" method="get">
     <label for="table">Table: </label><select id="table" name="table" onchange="changeTable(this)">

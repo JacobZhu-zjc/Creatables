@@ -81,6 +81,9 @@ $logged_in = isset($_SESSION["username"]);
     <a href="search.php">SEARCH</a>
     <br>
     <br>
+    <a href="projection.php">COLUMN PROJECTION</a>
+    <br>
+    <br>
     <a href="extra_info.php">INTERESTING STATS</a>
     <?php
         if (!is_null($max_avg)) {
