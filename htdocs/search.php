@@ -69,7 +69,7 @@
     <br>
     <input type="submit" value="SEARCH">
 </form>
-<br><br>
+<br>
 <iframe name="searchFrame" src="api/search_results.php" style="width:100%; height:300px; border: none"></iframe>
 </body>
 </html>
