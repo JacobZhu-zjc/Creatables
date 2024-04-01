@@ -11,12 +11,11 @@ $projects = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
 $query = "SELECT COUNT(*) FROM Projects_PostsProject";
 $count = $conn->query($query)->fetch_all()[0][0];
 
-
-$query = "SELECT max(avgStars) FROM (SELECT PID, avg(Stars) as avgStars FROM Feedback_LeavesFeedback GROUP BY PID) as Avgs";
+$query = "SELECT round(max(avgStars), 2) FROM (SELECT PID, avg(Stars) as avgStars FROM Feedback_LeavesFeedback GROUP BY PID) as Avgs";
 $max_avg = $conn->query($query)->fetch_all()[0][0];
 
 if (!is_null($max_avg)) {
-    $stmt = $conn->prepare("SELECT * FROM Projects_PostsProject WHERE PID IN (SELECT PID FROM Feedback_LeavesFeedback GROUP BY PID HAVING avg(Stars)=?)");
+    $stmt = $conn->prepare("SELECT * FROM Projects_PostsProject WHERE PID IN (SELECT PID FROM Feedback_LeavesFeedback GROUP BY PID HAVING round(avg(Stars), 2)=?)");
     $stmt->bind_param("d", $max_avg);
     $stmt->execute();
     $best_projects = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -90,7 +89,7 @@ $logged_in = isset($_SESSION["username"]);
             echo("<h3>Best project(s):</h3>");
             foreach ($best_projects as $best_project) {
                 echo('<a href="project_viewer.php?id='.$best_project["PID"].'">'.$best_project["Name"].'</a>');
-                echo('&emsp; Rating: '.number_format((float)$max_avg, 2, '.', '').'<br><br>');
+                echo('&emsp; Rating: '.$max_avg.'<br><br>');
             }
         }
     ?>
