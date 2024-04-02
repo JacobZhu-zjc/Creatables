@@ -10,7 +10,7 @@ if (!isset($_SESSION["username"]) || !isset($_POST["id"])) {
     redirect_to_error_page("Authentication error");
 }
 
-// Delete message
+// Delete project
 $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
 $stmt = $conn->prepare("DELETE FROM Projects_PostsProject WHERE Username=? AND PID=?");
 $stmt->bind_param("si", $_SESSION["username"], $_POST["id"]);
