@@ -7,12 +7,14 @@
         body {
             text-align: center;
         }
-        input, select {
+        input, select, button {
             margin-bottom: 10px;
+            margin-top: 10px;
         }
         #error {
             color: red;
         }
+        
     </style>
 </head>
 <body>
@@ -36,7 +38,12 @@
     async function highRateCount(file) {
     let json = await fetch(file);
     let information = await json.text();
-    document.getElementById("popularProjects").textContent = information;
+    info = JSON.parse(information);
+    out = [];
+    for (i = 0; i < info.length; i++){
+        out.push(" " + info[i].name)
+    }
+    document.getElementById("popularProjects").textContent = out;
 }
     document.getElementById("ratedProjects").addEventListener("click", function(){
         highRateCount("api/popular_projects.php");
@@ -44,7 +51,12 @@
     async function newUser(file) {
     let json = await fetch(file);
     let information = await json.text();
-    document.getElementById("UserInfo").textContent = information;
+    info = JSON.parse(information);
+    out = [];
+    for (i = 0; i < info.length; i++){
+        out.push(" " + info[i].Username)
+    }
+    document.getElementById("UserInfo").textContent = out;
 }
     document.getElementById("newUser").addEventListener("click", function(){
         newUser("api/new_user.php");
@@ -52,7 +64,13 @@
     async function superRater(file) {
     let json = await fetch(file);
     let information = await json.text();
-    document.getElementById("allRatedInfo").textContent = information;
+    info = JSON.parse(information);
+    out = [];
+    for (i = 0; i < info.length; i++){
+        out.push(" " + info[i].Name)
+    }
+    document.getElementById("allRatedInfo").textContent = out;
+    
 }
     document.getElementById("allRated").addEventListener("click", function(){
         superRater("api/all_rated.php");
@@ -66,3 +84,4 @@
 </html>
 
 <!-- // https://www.w3schools.com/js/js_api_fetch.asp-->
+

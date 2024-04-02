@@ -188,6 +188,24 @@ VALUES ('Pretty good', 4, 'Sally Jones', 4);
 INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
 VALUES ('I’m Michael Morbius!', 5, 'Michael Morbius', 4);
 INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('I’m moderately happy', 4, 'John Fubar', 3);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('I’m very dissatisfied', 1, 'Jacob Zhu', 3);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('I’m happy', 5, 'Future Fellow', 3);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('Mid', 3, 'Bob Jones', 3);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('Pretty good', 4, 'Sally Jones', 3);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('I’m Michael Morbius!', 5, 'Michael Morbius', 3);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('Mid', 3, 'Bob Jones', 2);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('Pretty good', 4, 'Sally Jones', 2);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('I’m Michael Morbius!', 5, 'Michael Morbius', 2);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
 VALUES ('Morbing out rn. 3/5.', 3, 'Michael Morbius', 1);
 INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
 VALUES ('Terrible!!!', 1, 'Sally Jones', 1);
