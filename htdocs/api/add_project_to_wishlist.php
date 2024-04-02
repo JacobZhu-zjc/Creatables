@@ -8,7 +8,7 @@ function redirect_to_error_page($message) {
 }
 
 function redirect_with_error($message) {
-    header("Location: ../wishlist_viewer.php?err=".urlencode($message));
+    header("Location: ../wishlist_viewer.php?err=".urlencode($message).'&id='.$_POST["wishlistID"]);
     die();
 }
 
