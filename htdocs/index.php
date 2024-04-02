@@ -86,7 +86,7 @@ $logged_in = isset($_SESSION["username"]);
     <a href="extra_info.php">INTERESTING STATS</a>
     <?php
         if (!is_null($max_avg)) {
-            echo("<h3>Best project(s):</h3>");
+            echo("<h3>Highest rated project:</h3>");
             foreach ($best_projects as $best_project) {
                 echo('<a href="project_viewer.php?id='.$best_project["PID"].'">'.$best_project["Name"].'</a>');
                 echo('&emsp; Rating: '.$max_avg.'<br><br>');

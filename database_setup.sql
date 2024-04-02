@@ -1,7 +1,3 @@
--- Optional: create database
--- CREATE DATABASE creatables
--- USE creatables
-
 -- Drop existing tables
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS Contains;
@@ -134,7 +130,6 @@ INSERT INTO City_Timezones (City, Timezone)
 VALUES ('Berlin', 1);
 
 
-
 INSERT INTO Users (Username, PasswordHash, City)
 VALUES ('Bob Jones', '5f4dcc3b5aa765d61d8327deb882cf99', 'Vancouver');
 INSERT INTO Users (Username, PasswordHash, City)
@@ -192,8 +187,10 @@ INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
 VALUES ('Pretty good', 4, 'Sally Jones', 4);
 INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
 VALUES ('I’m Michael Morbius!', 5, 'Michael Morbius', 4);
-
-
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('Morbing out rn. 3/5.', 3, 'Michael Morbius', 1);
+INSERT INTO Feedback_LeavesFeedback (Title, Stars, Username, PID)
+VALUES ('Terrible!!!', 1, 'Sally Jones', 1);
 
 
 INSERT INTO Images_ContainsImages (GalleryIndex, ImageData, Caption, PID)
