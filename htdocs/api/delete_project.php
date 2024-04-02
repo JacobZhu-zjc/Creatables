@@ -19,5 +19,5 @@ $conn->close();
 
 ?>
 <script>
-    window.history.go(-2); // Go back to wherever they were before the project
+    location.href = "../index.php";
 </script>
