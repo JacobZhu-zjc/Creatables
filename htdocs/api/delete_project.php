@@ -1,10 +1,12 @@
 <?php
 require("config.php");
 
-function redirect_to_error_page($message) {
-    header("Location: ../error.php?err=".urlencode($message));
+function redirect_to_error_page($message)
+{
+    header("Location: ../error.php?err=" . urlencode($message));
     die();
 }
+
 session_start();
 if (!isset($_SESSION["username"]) || !isset($_POST["id"])) {
     redirect_to_error_page("Authentication error");

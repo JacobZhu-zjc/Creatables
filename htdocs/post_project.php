@@ -6,17 +6,21 @@
         .bottomSpace {
             margin-bottom: 15px;
         }
+
         textarea {
             width: 100%;
             height: 200px;
         }
+
         body {
             margin-left: 5%;
             margin-right: 5%;
         }
+
         button {
             margin-right: 5px;
         }
+
         #error {
             color: red;
         }
@@ -149,25 +153,25 @@
     <br>
     <label>Tools:</label>
     <table>
-    <tbody id="toolTable">
+        <tbody id="toolTable">
         <tr>
             <td><input type="text" placeholder="Name" name="toolName[]" maxlength="60"></td>
             <td><input type="url" placeholder="Purchase Link" name="link[]" maxlength="100"></td>
         </tr>
-    </tbody>
+        </tbody>
     </table>
     <button class="bottomSpace" type="button" onclick="addTool()">+</button>
     <button class="bottomSpace" type="button" onclick="removeLastTool()">-</button>
     <br>
     <label>Materials:</label>
     <table>
-    <tbody id="materialTable">
+        <tbody id="materialTable">
         <tr>
             <td><input type="text" placeholder="Name" name="materialName[]" maxlength="60"></td>
             <td><input type="number" placeholder="Quantity" name="quantity[]"></td>
             <td><input type="text" placeholder="Unit" name="unit[]" maxlength="10"></td>
         </tr>
-    </tbody>
+        </tbody>
     </table>
     <button class="bottomSpace" type="button" onclick="addMaterial()">+</button>
     <button class="bottomSpace" type="button" onclick="removeLastMaterial()">-</button>

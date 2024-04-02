@@ -9,7 +9,7 @@ if ($conn->error) {
 $results = $conn->query("SHOW TABLES")->fetch_all();
 $tables = array_column($results, 0);
 $table_attributes = [];
-foreach($tables as $table) {
+foreach ($tables as $table) {
     $results = $conn->query("DESCRIBE " . $table)->fetch_all();
     $table_attributes[$table] = array_column($results, 0);
 }
@@ -21,6 +21,7 @@ $conn->close();
     <title>PROJECT COLUMNS</title>
     <script>
         const tables = <?= json_encode($table_attributes) ?>;
+
         function changeTable(picker) {
             const table = picker.value;
             const checkboxes = document.getElementById("checkboxes");

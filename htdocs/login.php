@@ -6,9 +6,11 @@
         body {
             text-align: center;
         }
+
         input {
             margin-bottom: 10px;
         }
+
         #error {
             color: red;
         }
@@ -18,12 +20,12 @@
 <h1>LOGIN</h1>
 <em id="error">
     <strong>
-    <?php
-    if (isset($_GET["err"]) && $_GET["err"]) {
-        echo(htmlspecialchars($_GET["err"]));
-        echo("<br><br>");
-    }
-    ?>
+        <?php
+        if (isset($_GET["err"]) && $_GET["err"]) {
+            echo(htmlspecialchars($_GET["err"]));
+            echo("<br><br>");
+        }
+        ?>
     </strong>
 </em>
 <form action="api/validate_login.php" method="post">

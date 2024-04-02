@@ -46,31 +46,39 @@ if (isset($_SESSION["username"])) {
             margin-left: 5%;
             margin-right: 5%;
         }
+
         div {
             border: 1px solid black;
         }
+
         ul {
             border-collapse: collapse;
             margin: 20px;
         }
+
         li {
             margin-top: 5px;
             margin-bottom: 10px;
         }
+
         form {
             margin-top: 10px;
             float: right;
         }
+
         input {
             margin-left: 5px;
         }
+
         em {
             color: red;
         }
+
         #nameTag {
             font-size: 30px;
             margin: 5px;
         }
+
         #deleteButton {
             color: red;
             border: 1px solid red;
@@ -80,6 +88,7 @@ if (isset($_SESSION["username"])) {
             margin: 5px;
             color: "red";
         }
+
         .error {
             color: "red";
         }
@@ -102,54 +111,51 @@ if (isset($_SESSION["username"])) {
 <a href="profile.php?u=<?= urlencode($result["Username"]) ?>" id="nameTag"><?= $result["Username"] ?></a>
 
 <?php
-    // Optionally displaying the button to delete the wishlist if current user is the creator
-    if ($logged_in_as_creator) {
-        echo('<form action="api/delete_wishlist.php" method="post">');
-        echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');
-        echo('<input id="deleteButton" type="submit" value="DELETE">');
-        echo('</form>');
-    }
+// Optionally displaying the button to delete the wishlist if current user is the creator
+if ($logged_in_as_creator) {
+    echo('<form action="api/delete_wishlist.php" method="post">');
+    echo('<input type="hidden" value="' . $wlid . '" name="wishlistID">');
+    echo('<input id="deleteButton" type="submit" value="DELETE">');
+    echo('</form>');
+}
 ?>
 
 <h3>Projects:</h3>
 <div>
     <?php
-        if (count($projects) > 0) {
-            echo("<ul>");
-            foreach ($projects as $project) {
-                // TODO: add individual delete buttons for each project
-                echo('<li><a href="project_viewer.php?id='.urlencode($project["PID"]).'">');
-                echo($project["Name"]);
-                echo('</a></li>');
-            }
-            echo("</ul>");
-        } else {
-            echo("<br>");
-            echo("&ensp;No projects added yet...<br><br>");
+    if (count($projects) > 0) {
+        echo("<ul>");
+        foreach ($projects as $project) {
+            echo('<li><a href="project_viewer.php?id=' . urlencode($project["PID"]) . '">');
+            echo($project["Name"]);
+            echo('</a></li>');
         }
+        echo("</ul>");
+    } else {
+        echo("<br>");
+        echo("&ensp;No projects added yet...<br><br>");
+    }
     ?>
 </div>
 
 <?php
-    if ($logged_in_as_creator) {
-        // Optionally displaying the text field to add new projects if the current user is the creator
-        echo('<form action="api/add_project_to_wishlist.php" method="post">');
-        echo('<input type="text" placeholder="Project ID" name="projectID">');
-        echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');
-        echo('<input type="submit" value="ADD PROJECT">');
-        echo('</form>');
-
-        echo('<br><br>');
-
-        // Optionally displaying the text field to rename the wishlist or to send the wishlist to someone else, if the current user is the creator
-        echo('<form action="api/update_wishlist.php" method="post">');
-        echo('<h3>Send your wishlist to someone else!</h3>');
-        echo('<input type="text" placeholder="New wishlist name" name="newWishlistName">');
-        echo('<input type="text" placeholder="Username of new wishlist owner" name="newUsername">');
-        echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');
-        echo('<input type="submit" value="UPDATE WISHLIST">');
-        echo('</form>');
-    }
+if ($logged_in_as_creator) {
+    // Optionally displaying the text field to add new projects if the current user is the creator
+    echo('<form action="api/add_project_to_wishlist.php" method="post">');
+    echo('<input type="text" placeholder="Project ID" name="projectID">');
+    echo('<input type="hidden" value="' . $wlid . '" name="wishlistID">');
+    echo('<input type="submit" value="ADD PROJECT">');
+    echo('</form>');
+    echo('<br><br>');
+    // Optionally displaying the text field to rename the wishlist or to send the wishlist to someone else, if the current user is the creator
+    echo('<form action="api/update_wishlist.php" method="post">');
+    echo('<h3>Send your wishlist to someone else!</h3>');
+    echo('<input type="text" placeholder="New wishlist name" name="newWishlistName">');
+    echo('<input type="text" placeholder="Username of new wishlist owner" name="newUsername">');
+    echo('<input type="hidden" value="' . $wlid . '" name="wishlistID">');
+    echo('<input type="submit" value="UPDATE WISHLIST">');
+    echo('</form>');
+}
 ?>
 </body>
 </html>

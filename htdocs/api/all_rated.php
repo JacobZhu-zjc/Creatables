@@ -9,7 +9,6 @@ if ($conn->error) {
 $stmt = $conn->prepare("SELECT * FROM Projects_PostsProject p1 WHERE NOT EXISTS ((SELECT Username FROM Users) EXCEPT (SELECT f.Username FROM Feedback_LeavesFeedback f WHERE f.PID = p1.PID))");
 $stmt->execute();
 $result = $stmt->get_result();
-$outp = $result->fetch_all(MYSQLI_ASSOC);
-echo(json_encode($outp));
+echo(json_encode($result->fetch_all(MYSQLI_ASSOC)));
 $conn->close();
-?>
+

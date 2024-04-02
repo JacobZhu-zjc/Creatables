@@ -6,13 +6,16 @@
         body {
             text-align: center;
         }
+
         label {
             text-align: left;
         }
+
         input {
             margin-bottom: 10px;
             min-width: 300px;
         }
+
         textarea {
             margin-bottom: 10px;
             min-width: 300px;

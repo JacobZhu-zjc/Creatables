@@ -1,8 +1,9 @@
 <?php
 require("config.php");
 
-function redirect_with_error($message) {
-    header("Location: ../login.php?err=".urlencode($message));
+function redirect_with_error($message)
+{
+    header("Location: ../login.php?err=" . urlencode($message));
     die();
 }
 
@@ -34,7 +35,7 @@ $conn->close();
 
 if ($result == 0) {
     // Empty results, password doesn't match
-    redirect_with_error("Incorrect password for user ".$username);
+    redirect_with_error("Incorrect password for user " . $username);
 }
 // Success! Create session, redirect to profile
 session_start();

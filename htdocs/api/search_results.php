@@ -54,7 +54,7 @@ if ($conn->error) {
 $stmt = $conn->prepare($query);
 $type_string = implode(array_map(function ($attr) use ($valid_attribute_types) {
     return $valid_attribute_types[$attr];
-    }, $attributes));
+}, $attributes));
 $stmt->bind_param($type_string, ...$rows);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -74,18 +74,18 @@ $conn->close();
     </style>
 </head>
 <body>
-    <?php
-    /**
-     * @param array $fields
-     * @param array $rows
-     * @return void
-     */
-    if (count($rows) > 0) {
-        echo("<h3>" . count($rows) . " results:</h3>");
-        echo_table($fields, $rows);
-    } else {
-        echo("<h3>No matching results.</h3>");
-    }
-    ?>
+<?php
+/**
+ * @param array $fields
+ * @param array $rows
+ * @return void
+ */
+if (count($rows) > 0) {
+    echo("<h3>" . count($rows) . " results:</h3>");
+    echo_table($fields, $rows);
+} else {
+    echo("<h3>No matching results.</h3>");
+}
+?>
 </body>
 </html>

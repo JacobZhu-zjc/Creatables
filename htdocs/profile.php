@@ -25,7 +25,7 @@ if (count($results) != 1) {
 $city = $results[0]["City"];
 $utc_offset = $results[0]["Timezone"];
 $prefix = $utc_offset >= 0 ? "+" : "";
-$time = date_create("now", new DateTimeZone($prefix.$utc_offset));
+$time = date_create("now", new DateTimeZone($prefix . $utc_offset));
 
 $stmt = $conn->prepare("SELECT * FROM Projects_PostsProject WHERE Username=?");
 $stmt->bind_param("s", $username);
@@ -51,13 +51,16 @@ $logged_in_as_author = $logged_in && $_SESSION["username"] == $username;
         h2 {
             display: inline;
         }
+
         .offsetRight {
             float: right;
             margin-left: 5px;
         }
+
         div {
             border: 1px solid black;
         }
+
         body {
             margin-left: 5%;
             margin-right: 5%;
@@ -85,9 +88,9 @@ if ($logged_in_as_author) {
 <div>
     <ul>
         <?php
-            foreach($guides as $guide) {
-                echo('<li><a target="_blank" href="project_viewer.php?id='.$guide["PID"].'">'.$guide["Name"].'</a></li>');
-            }
+        foreach ($guides as $guide) {
+            echo('<li><a target="_blank" href="project_viewer.php?id=' . $guide["PID"] . '">' . $guide["Name"] . '</a></li>');
+        }
         ?>
     </ul>
 </div>
@@ -102,8 +105,8 @@ if ($logged_in_as_author) {
 <div>
     <ul>
         <?php
-        foreach($wishlists as $wishlist) {
-            echo('<li><a target="_blank" href="wishlist_viewer.php?id='.$wishlist["WLID"].'">'.$wishlist["Name"].'</a></li>');
+        foreach ($wishlists as $wishlist) {
+            echo('<li><a target="_blank" href="wishlist_viewer.php?id=' . $wishlist["WLID"] . '">' . $wishlist["Name"] . '</a></li>');
         }
         ?>
     </ul>

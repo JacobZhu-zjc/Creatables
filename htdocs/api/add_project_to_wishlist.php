@@ -2,13 +2,15 @@
 require("config.php");
 
 // Helper functions to redirect users if an error occurs
-function redirect_to_error_page($message) {
-    header("Location: ../error.php?err=".urlencode($message));
+function redirect_to_error_page($message)
+{
+    header("Location: ../error.php?err=" . urlencode($message));
     die();
 }
 
-function redirect_with_error($message) {
-    header("Location: ../wishlist_viewer.php?err=".urlencode($message).'&id='.$_POST["wishlistID"]);
+function redirect_with_error($message)
+{
+    header("Location: ../wishlist_viewer.php?err=" . urlencode($message) . '&id=' . $_POST["wishlistID"]);
     die();
 }
 
@@ -41,7 +43,8 @@ $stmt->bind_param("i", $projectID);
 $stmt->execute();
 if ($stmt->get_result()->num_rows == 0) {
     $conn->close();
-    return redirect_with_error("Specified project does not exist");
+    redirect_with_error("Specified project does not exist");
+    die();
 }
 
 // If project does exist, inserts tuple into database
@@ -51,5 +54,5 @@ $stmt->execute();
 $conn->close();
 
 // Redirecting to wishlist viewer page
-header("Location: ../wishlist_viewer.php?id=".urlencode($wishlistID));
+header("Location: ../wishlist_viewer.php?id=" . urlencode($wishlistID));
 ?>

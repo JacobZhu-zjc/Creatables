@@ -6,9 +6,11 @@
         body {
             text-align: center;
         }
+
         input, select {
             margin-bottom: 10px;
         }
+
         #error {
             color: red;
         }

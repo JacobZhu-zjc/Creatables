@@ -1,8 +1,9 @@
 <?php
 require("config.php");
 
-function redirect_with_error($message) {
-    header("Location: ../register.php?err=".urlencode($message));
+function redirect_with_error($message)
+{
+    header("Location: ../register.php?err=" . urlencode($message));
     die();
 }
 
@@ -47,16 +48,16 @@ switch ($city) {
         $city_name = "Quebec City";
         break;
     default:
-        redirect_with_error("Invalid city ".$city);
+        redirect_with_error("Invalid city " . $city);
 }
 if (strlen($username) < $min_username_length) {
-    redirect_with_error("Username must be at least ".$min_username_length." characters long.");
+    redirect_with_error("Username must be at least " . $min_username_length . " characters long.");
 }
 if (strlen($username) > 40) {
     redirect_with_error("Username must not be longer than 40 characters long.");
 }
 if (strlen($password) < $min_password_length) {
-    redirect_with_error("Password must be at least ".$min_password_length." characters long.");
+    redirect_with_error("Password must be at least " . $min_password_length . " characters long.");
 }
 
 // Check if username is available
@@ -74,7 +75,7 @@ $stmt->execute();
 if ($stmt->get_result()->num_rows != 0) {
     // Username is taken
     $conn->close();
-    redirect_with_error("Username is already in use: ".$username);
+    redirect_with_error("Username is already in use: " . $username);
 }
 
 // Success! Create account
@@ -87,4 +88,4 @@ $conn->close();
 
 // Redirect to login page
 $message = "Registration successful, log in to continue";
-header("Location: ../login.php?err=".urlencode($message));
+header("Location: ../login.php?err=" . urlencode($message));

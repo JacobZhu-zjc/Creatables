@@ -1,8 +1,9 @@
 <?php
 require("config.php");
 
-function redirect_to_error_page($message) {
-    header("Location: ../error.php?err=".urlencode($message));
+function redirect_to_error_page($message)
+{
+    header("Location: ../error.php?err=" . urlencode($message));
     die();
 }
 
@@ -25,4 +26,4 @@ $stmt->bind_param("si", $username, $wishlistID);
 $stmt->execute();
 $conn->close();
 
-header("Location: ../profile.php?u=".urlencode($username));
+header("Location: ../profile.php?u=" . urlencode($username));

@@ -1,8 +1,9 @@
 <?php
-function post_message() {
+function post_message()
+{
     require_once("config.php");
     session_start();
-    
+
     if (!isset($_SESSION["username"])) {
         return "You must be logged in to send messages";
     }
@@ -30,13 +31,14 @@ function post_message() {
     }
 
     // Post message
-    $stmt = $conn->prepare("INSERT INTO Message_Sends(Text, SenderUsername, ReceiverUsername)".
+    $stmt = $conn->prepare("INSERT INTO Message_Sends(Text, SenderUsername, ReceiverUsername)" .
         "VALUES (?,?,?)");
     $stmt->bind_param("sss", $message, $_SESSION["username"], $recipient);
     $stmt->execute();
     $conn->close();
     return "Message sent!";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

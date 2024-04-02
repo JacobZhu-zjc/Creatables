@@ -13,8 +13,6 @@ $outp = $result->fetch_all(MYSQLI_ASSOC);
 echo json_encode($outp);
 $conn->close();
 
-// https://www.w3schools.com/js/js_json_php.asp
-?>
 
 
 

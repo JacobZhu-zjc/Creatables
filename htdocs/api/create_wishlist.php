@@ -2,13 +2,15 @@
 require("config.php");
 
 // Helper functions to redirect users if an error occurs
-function redirect_to_error_page($message) {
-    header("Location: ../error.php?err=".urlencode($message));
+function redirect_to_error_page($message)
+{
+    header("Location: ../error.php?err=" . urlencode($message));
     die();
 }
 
-function redirect_with_error($message) {
-    header("Location: ../create_wishlist.php?err=".urlencode($message));
+function redirect_with_error($message)
+{
+    header("Location: ../create_wishlist.php?err=" . urlencode($message));
     die();
 }
 
@@ -38,5 +40,4 @@ $wishlistID = $conn->insert_id;
 $conn->close();
 
 // Redirecting to wishlist viewer page
-header("Location: ../wishlist_viewer.php?id=".urlencode($wishlistID));
-?>
+header("Location: ../wishlist_viewer.php?id=" . urlencode($wishlistID));

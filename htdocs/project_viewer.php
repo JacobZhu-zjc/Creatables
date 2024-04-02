@@ -70,29 +70,37 @@ if (isset($_SESSION["username"])) {
             margin-left: 5%;
             margin-right: 5%;
         }
+
         div {
             width: 100%;
         }
+
         .scrollable {
             height: 40vh;
             overflow-y: scroll;
         }
+
         image {
             height: 100px;
             width: auto;
         }
+
         h2 a {
             font-style: italic;
         }
+
         li {
             margin-bottom: 10px;
         }
+
         em {
             color: red;
         }
+
         .postButton {
             margin-top: 10px;
         }
+
         #delete_button {
             color: red;
             border: 1px solid red;
@@ -101,25 +109,31 @@ if (isset($_SESSION["username"])) {
             min-height: 33px;
             margin: 5px;
         }
+
         #complete_button {
             float: right;
             min-width: 100px;
             min-height: 33px;
             margin: 5px;
         }
+
         .top-margin {
             margin-top: 30px;
         }
+
         #review_content {
             border: 1px solid black;
         }
+
         #commentType {
             margin-bottom: 10px;
         }
+
         #titleInput {
             width: 100%;
             margin-bottom: 10px;
         }
+
         #commentInput {
             width: 100%;
             min-height: 150px;
@@ -222,7 +236,7 @@ if (count($images) > 0) {
 <div>
     <h3>Post a review:</h3>
     <form action="api/post_feedback.php" method="post" id="ratingForm">
-    <input type="text" placeholder="Add a title!" id="titleInput" name="title">
+        <input type="text" placeholder="Add a title!" id="titleInput" name="title">
         <select name="commentType" id="commentType">
             <option value="text">Text</option>
             <option value="stars">Star rating</option>

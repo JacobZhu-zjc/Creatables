@@ -1,13 +1,15 @@
 <?php
 require("config.php");
 
-function redirect_to_error_page($message) {
-    header("Location: ../error.php?err=".urlencode($message));
+function redirect_to_error_page($message)
+{
+    header("Location: ../error.php?err=" . urlencode($message));
     die();
 }
 
-function redirect_with_error($message) {
-    header("Location: ../post_project.php?err=".urlencode($message));
+function redirect_with_error($message)
+{
+    header("Location: ../post_project.php?err=" . urlencode($message));
     die();
 }
 
@@ -23,7 +25,6 @@ if (!isset($_SESSION["username"])) {
 $username = $_SESSION["username"];
 
 
-
 if (!isset($_POST["title"]) || strlen($_POST["title"]) == 0) {
     redirect_with_error("You must enter a title");
 }
@@ -34,9 +35,9 @@ $instructions = htmlspecialchars($_POST["instructions"]);
 
 // Parse materials
 $materials = [];
-if (isset($_POST["materialName"]) && isset($_POST["quantity"]) && isset($_POST["unit"]) 
-        && count($_POST["materialName"]) == count($_POST["quantity"])
-        && count($_POST["quantity"]) == count($_POST["unit"])) {
+if (isset($_POST["materialName"]) && isset($_POST["quantity"]) && isset($_POST["unit"])
+    && count($_POST["materialName"]) == count($_POST["quantity"])
+    && count($_POST["quantity"]) == count($_POST["unit"])) {
     for ($i = 0; $i < count($_POST["materialName"]); $i++) {
         $newMaterial["name"] = htmlspecialchars($_POST["materialName"][$i]);
         $newMaterial["quantity"] = $_POST["quantity"][$i];
@@ -48,7 +49,7 @@ if (isset($_POST["materialName"]) && isset($_POST["quantity"]) && isset($_POST["
 // Parse tools 
 $tools = [];
 if (isset($_POST["toolName"]) && isset($_POST["link"])
-        && count($_POST["toolName"]) == count($_POST["link"])) {
+    && count($_POST["toolName"]) == count($_POST["link"])) {
     for ($i = 0; $i < count($_POST["toolName"]); $i++) {
         $newTool["name"] = htmlspecialchars($_POST["toolName"][$i]);
         $newTool["purchaseLink"] = htmlspecialchars($_POST["link"][$i]);
@@ -57,8 +58,8 @@ if (isset($_POST["toolName"]) && isset($_POST["link"])
 }
 
 $images = [];
-if (isset($_POST["imageName"]) && isset($_POST["imageData"]) 
-        && count($_POST["imageName"]) == count($_POST["imageData"])) {
+if (isset($_POST["imageName"]) && isset($_POST["imageData"])
+    && count($_POST["imageName"]) == count($_POST["imageData"])) {
     for ($i = 0; $i < count($_POST["imageName"]); $i++) {
         $newImage["name"] = htmlspecialchars($_POST["imageName"][$i]);
         $newImage["data"] = $_POST["imageData"][$i];
@@ -98,5 +99,5 @@ foreach ($tools as $tool) {
     $stmt2->execute();
 }
 $conn->close();
-header("Location: ../project_viewer.php?id=".$pid);
+header("Location: ../project_viewer.php?id=" . $pid);
 ?>

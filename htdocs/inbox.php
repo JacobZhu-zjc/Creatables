@@ -5,7 +5,7 @@ require("api/config.php");
 session_start();
 if (!isset($_SESSION["username"])) {
     $message = "You must be logged in to view messages projects";
-    header("Location: error.php?err=".$message);
+    header("Location: error.php?err=" . $message);
     die();
 }
 
@@ -25,18 +25,22 @@ $conn->close();
         body {
             margin: 5%;
         }
+
         label {
             text-align: left;
         }
+
         input {
             margin-top: 5px;
             margin-bottom: 5px;
         }
+
         table {
             width: 100%;
             border: 1px solid black;
             margin-bottom: 10px;
         }
+
         iframe {
             width: 100%;
             height: 300px;
@@ -44,6 +48,7 @@ $conn->close();
             margin-bottom: 10px;
             overflow: auto;
         }
+
         .subject {
             width: 80%;
         }
@@ -68,11 +73,11 @@ $conn->close();
     <?php
     foreach ($results as $message) {
         echo('<tr><td class="subject">');
-        echo('<a href="#" onclick="showMessage('.$message["MSID"].')">');
+        echo('<a href="#" onclick="showMessage(' . $message["MSID"] . ')">');
         echo(mb_strimwidth($message["Text"], 0, 25, '...'));
         echo("</a></td><td>");
-        echo('<input type="submit" value="Delete" onclick="deleteMessage('.$message["MSID"].')">');
-        echo("</td><td>From: ".$message["SenderUsername"]."</td></tr>");
+        echo('<input type="submit" value="Delete" onclick="deleteMessage(' . $message["MSID"] . ')">');
+        echo("</td><td>From: " . $message["SenderUsername"] . "</td></tr>");
     }
     ?>
     </tbody>

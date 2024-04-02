@@ -15,11 +15,13 @@ $min_password_length = 5;
 $front_page_posts = 5;
 
 // Begin shared functions
-function get_image_tag_from_b64($b64) {
-    return '<img src="'.$b64.'">';
+function get_image_tag_from_b64($b64)
+{
+    return '<img src="' . $b64 . '">';
 }
 
-function echo_table($fields, $rows) {
+function echo_table($fields, $rows)
+{
     echo("<table>");
     echo("<tr>");
     foreach ($fields as $field) {

@@ -7,8 +7,9 @@ require("config.php");
 
 // Using if statements to decide input?
 // Using dropdown for ratings, or just string?
-function redirect_with_error($message) {
-    header("Location: ../project_viewer.php?err=".urlencode($message)."&id=".$_POST["pidGrabber"]);
+function redirect_with_error($message)
+{
+    header("Location: ../project_viewer.php?err=" . urlencode($message) . "&id=" . $_POST["pidGrabber"]);
     die();
 }
 
@@ -66,5 +67,5 @@ $conn->close();
 ?>
 
 <script>
-window.history.go(-1);
+    window.history.go(-1);
 </script>

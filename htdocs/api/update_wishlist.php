@@ -2,15 +2,20 @@
 require("config.php");
 
 // Helper functions
-function redirect_to_error_page($message) {
-    header("Location: ../error.php?err=".urlencode($message));
+function redirect_to_error_page($message)
+{
+    header("Location: ../error.php?err=" . urlencode($message));
     die();
 }
-function redirect_with_error($message) {
-    header("Location: ../wishlist_viewer.php?err=".urlencode($message)."&id=".$_POST["wishlistID"]);
+
+function redirect_with_error($message)
+{
+    header("Location: ../wishlist_viewer.php?err=" . urlencode($message) . "&id=" . $_POST["wishlistID"]);
     die();
 }
-function validate_username($conn, $newUsername) {
+
+function validate_username($conn, $newUsername)
+{
     $stmt = $conn->prepare("SELECT * FROM Users WHERE Username=?");
     $stmt->bind_param("s", $newUsername);
     $stmt->execute();
@@ -66,4 +71,4 @@ if (!$hasNewWishlistName) {
 }
 $conn->close();
 
-header("Location: ../wishlist_viewer.php?id=".urlencode($wishlistID));
+header("Location: ../wishlist_viewer.php?id=" . urlencode($wishlistID));
