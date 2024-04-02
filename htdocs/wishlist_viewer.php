@@ -143,6 +143,7 @@ if (isset($_SESSION["username"])) {
 
         // Optionally displaying the text field to rename the wishlist or to send the wishlist to someone else, if the current user is the creator
         echo('<form action="api/update_wishlist.php" method="post">');
+        echo('<h3>Send your wishlist to someone else!</h3>');
         echo('<input type="text" placeholder="New wishlist name" name="newWishlistName">');
         echo('<input type="text" placeholder="Username of new wishlist owner" name="newUsername">');
         echo('<input type="hidden" value="'.$wlid.'" name="wishlistID">');

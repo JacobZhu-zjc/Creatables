@@ -45,7 +45,7 @@ if ($stmt->get_result()->num_rows == 0) {
 }
 
 // If project does exist, inserts tuple into database
-$stmt = $conn->prepare("INSERT INTO Contains (WLID, PID) VALUES (?,?)");
+$stmt = $conn->prepare("INSERT IGNORE INTO Contains (WLID, PID) VALUES (?,?)");
 $stmt->bind_param("ii", $wishlistID, $projectID);
 $stmt->execute();
 $conn->close();
