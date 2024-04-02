@@ -10,7 +10,6 @@ $stmt = $conn->prepare("SELECT * FROM Projects_PostsProject p1 WHERE NOT EXISTS 
 $stmt->execute();
 $result = $stmt->get_result();
 $outp = $result->fetch_all(MYSQLI_ASSOC);
-echo json_encode($outp);
+echo(json_encode($outp));
 $conn->close();
-// https://www.w3schools.com/js/js_json_php.asp
 ?>
