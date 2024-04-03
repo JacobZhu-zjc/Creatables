@@ -5,15 +5,16 @@ $conn = new mysqli($db_address, $db_user, $db_pw, $db_name);
 if ($conn->error) {
     die("Error connecting to database");
 }
-$query = "SELECT * FROM Projects_PostsProject ORDER BY Timestamp DESC LIMIT $front_page_posts";
+$query = "SELECT PID, Username, Name FROM Projects_PostsProject ORDER BY Timestamp DESC LIMIT $front_page_posts";
 $projects = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
 
-$query = "SELECT COUNT(*) FROM Projects_PostsProject";
-$count = $conn->query($query)->fetch_all()[0][0];
+$query = "SELECT Username, COUNT(*) as Count FROM Projects_PostsProject GROUP BY Username";
+$user_counts = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
 
 $query = "SELECT round(max(avgStars), 2) FROM (SELECT PID, avg(Stars) as avgStars FROM Feedback_LeavesFeedback GROUP BY PID) as Avgs";
 $max_avg = $conn->query($query)->fetch_all()[0][0];
 
+$best_projects = [];
 if (!is_null($max_avg)) {
     $stmt = $conn->prepare("SELECT * FROM Projects_PostsProject WHERE PID IN (SELECT PID FROM Feedback_LeavesFeedback GROUP BY PID HAVING round(avg(Stars), 2)=?)");
     $stmt->bind_param("d", $max_avg);
@@ -96,7 +97,14 @@ if (!is_null($max_avg)) {
     }
 }
 ?>
-<h3>Total projects: <?= $count ?></h3>
+<h3>Project counts by user:</h3>
+<?php
+foreach ($user_counts as $user_count) {
+    echo("<div>");
+    echo($user_count["Username"] . " : " . $user_count["Count"]);
+    echo("</div>");
+}
+?>
 </body>
 </html>
 
