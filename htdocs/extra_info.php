@@ -45,7 +45,7 @@
         for (let i = 0; i < info.length; i++) {
             out.push(" " + info[i].name)
         }
-        document.getElementById("popularProjects").textContent = out;
+        document.getElementById("popularProjects").textContent = out.toString();
     }
 
     document.getElementById("ratedProjects").addEventListener("click", function () {
@@ -55,12 +55,12 @@
     async function newUser(file) {
         let json = await fetch(file);
         let information = await json.text();
-        info = JSON.parse(information);
-        out = [];
-        for (i = 0; i < info.length; i++) {
-            out.push(" " + info[i].Username)
+        let info = JSON.parse(information);
+        let out = [];
+        for (let i = 0; i < info.length; i++) {
+            out.push(" " + info[i]["Username"])
         }
-        document.getElementById("UserInfo").textContent = out;
+        document.getElementById("UserInfo").textContent = out.toString();
     }
 
     document.getElementById("newUser").addEventListener("click", function () {
@@ -70,12 +70,12 @@
     async function superRater(file) {
         let json = await fetch(file);
         let information = await json.text();
-        info = JSON.parse(information);
-        out = [];
-        for (i = 0; i < info.length; i++) {
+        let info = JSON.parse(information);
+        let out = [];
+        for (let i = 0; i < info.length; i++) {
             out.push(" " + info[i].Name)
         }
-        document.getElementById("allRatedInfo").textContent = out;
+        document.getElementById("allRatedInfo").textContent = out.toString();
 
     }
 
