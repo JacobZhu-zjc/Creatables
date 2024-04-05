@@ -46,7 +46,7 @@ CREATE TABLE Images_ContainsImages (
 );
 CREATE TABLE Feedback_LeavesFeedback (
     FBID INTEGER PRIMARY KEY AUTO_INCREMENT,
-    Title VARCHAR(60),
+    Title VARCHAR(60) NOT NULL,
     Stars TINYINT,
     Comment VARCHAR(500),
     ImageData MEDIUMTEXT,
@@ -57,7 +57,8 @@ CREATE TABLE Feedback_LeavesFeedback (
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     FOREIGN KEY (PID) REFERENCES Projects_PostsProject(PID)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    CHECK (Stars IS NOT NULL OR Comment IS NOT NULL or ImageData IS NOT NULL)
 );
 CREATE TABLE Message_Sends (
     MSID INTEGER PRIMARY KEY AUTO_INCREMENT,

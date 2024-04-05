@@ -1,6 +1,6 @@
 <?php
 // Disable error reporting (Enable in "production")
-//error_reporting(0);
+error_reporting(0);
 
 // Database connection params
 $db_address = "localhost";

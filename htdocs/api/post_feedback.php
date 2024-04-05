@@ -1,10 +1,5 @@
 <?php
 require("config.php");
-
-// For debugging:
-//var_dump($_POST);
-//die();
-
 // Using if statements to decide input?
 // Using dropdown for ratings, or just string?
 function redirect_with_error($message)
